@@ -1,0 +1,563 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		D55CD5012F241D04006C6A47 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D55CD4E82F241D02006C6A47 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D55CD4EF2F241D02006C6A47;
+			remoteInfo = RoomateApp;
+		};
+		D55CD50B2F241D04006C6A47 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D55CD4E82F241D02006C6A47 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D55CD4EF2F241D02006C6A47;
+			remoteInfo = RoomateApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D55CD4F02F241D02006C6A47 /* RoomateApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoomateApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D55CD5002F241D04006C6A47 /* RoomateAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoomateAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D55CD50A2F241D04006C6A47 /* RoomateAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoomateAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D55CD4F22F241D02006C6A47 /* RoomateApp */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RoomateApp;
+			sourceTree = "<group>";
+		};
+		D55CD5032F241D04006C6A47 /* RoomateAppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RoomateAppTests;
+			sourceTree = "<group>";
+		};
+		D55CD50D2F241D04006C6A47 /* RoomateAppUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RoomateAppUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D55CD4ED2F241D02006C6A47 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D55CD4FD2F241D04006C6A47 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D55CD5072F241D04006C6A47 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D55CD4E72F241D02006C6A47 = {
+			isa = PBXGroup;
+			children = (
+				D55CD4F22F241D02006C6A47 /* RoomateApp */,
+				D55CD5032F241D04006C6A47 /* RoomateAppTests */,
+				D55CD50D2F241D04006C6A47 /* RoomateAppUITests */,
+				D55CD4F12F241D02006C6A47 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D55CD4F12F241D02006C6A47 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D55CD4F02F241D02006C6A47 /* RoomateApp.app */,
+				D55CD5002F241D04006C6A47 /* RoomateAppTests.xctest */,
+				D55CD50A2F241D04006C6A47 /* RoomateAppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D55CD4EF2F241D02006C6A47 /* RoomateApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D55CD5142F241D04006C6A47 /* Build configuration list for PBXNativeTarget "RoomateApp" */;
+			buildPhases = (
+				D55CD4EC2F241D02006C6A47 /* Sources */,
+				D55CD4ED2F241D02006C6A47 /* Frameworks */,
+				D55CD4EE2F241D02006C6A47 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D55CD4F22F241D02006C6A47 /* RoomateApp */,
+			);
+			name = RoomateApp;
+			packageProductDependencies = (
+			);
+			productName = RoomateApp;
+			productReference = D55CD4F02F241D02006C6A47 /* RoomateApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D55CD4FF2F241D04006C6A47 /* RoomateAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D55CD5172F241D04006C6A47 /* Build configuration list for PBXNativeTarget "RoomateAppTests" */;
+			buildPhases = (
+				D55CD4FC2F241D04006C6A47 /* Sources */,
+				D55CD4FD2F241D04006C6A47 /* Frameworks */,
+				D55CD4FE2F241D04006C6A47 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D55CD5022F241D04006C6A47 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D55CD5032F241D04006C6A47 /* RoomateAppTests */,
+			);
+			name = RoomateAppTests;
+			packageProductDependencies = (
+			);
+			productName = RoomateAppTests;
+			productReference = D55CD5002F241D04006C6A47 /* RoomateAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D55CD5092F241D04006C6A47 /* RoomateAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D55CD51A2F241D04006C6A47 /* Build configuration list for PBXNativeTarget "RoomateAppUITests" */;
+			buildPhases = (
+				D55CD5062F241D04006C6A47 /* Sources */,
+				D55CD5072F241D04006C6A47 /* Frameworks */,
+				D55CD5082F241D04006C6A47 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D55CD50C2F241D04006C6A47 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D55CD50D2F241D04006C6A47 /* RoomateAppUITests */,
+			);
+			name = RoomateAppUITests;
+			packageProductDependencies = (
+			);
+			productName = RoomateAppUITests;
+			productReference = D55CD50A2F241D04006C6A47 /* RoomateAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D55CD4E82F241D02006C6A47 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					D55CD4EF2F241D02006C6A47 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					D55CD4FF2F241D04006C6A47 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = D55CD4EF2F241D02006C6A47;
+					};
+					D55CD5092F241D04006C6A47 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = D55CD4EF2F241D02006C6A47;
+					};
+				};
+			};
+			buildConfigurationList = D55CD4EB2F241D02006C6A47 /* Build configuration list for PBXProject "RoomateApp" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D55CD4E72F241D02006C6A47;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D55CD4F12F241D02006C6A47 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D55CD4EF2F241D02006C6A47 /* RoomateApp */,
+				D55CD4FF2F241D04006C6A47 /* RoomateAppTests */,
+				D55CD5092F241D04006C6A47 /* RoomateAppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D55CD4EE2F241D02006C6A47 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D55CD4FE2F241D04006C6A47 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D55CD5082F241D04006C6A47 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D55CD4EC2F241D02006C6A47 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D55CD4FC2F241D04006C6A47 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D55CD5062F241D04006C6A47 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D55CD5022F241D04006C6A47 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D55CD4EF2F241D02006C6A47 /* RoomateApp */;
+			targetProxy = D55CD5012F241D04006C6A47 /* PBXContainerItemProxy */;
+		};
+		D55CD50C2F241D04006C6A47 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D55CD4EF2F241D02006C6A47 /* RoomateApp */;
+			targetProxy = D55CD50B2F241D04006C6A47 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D55CD5122F241D04006C6A47 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D55CD5132F241D04006C6A47 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D55CD5152F241D04006C6A47 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"RoomateApp/Preview Content\"";
+				DEVELOPMENT_TEAM = NUC37C5ZL9;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.roomateapp.RoomateApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D55CD5162F241D04006C6A47 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"RoomateApp/Preview Content\"";
+				DEVELOPMENT_TEAM = NUC37C5ZL9;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.roomateapp.RoomateApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D55CD5182F241D04006C6A47 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NUC37C5ZL9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.roomateapp.RoomateAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RoomateApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RoomateApp";
+			};
+			name = Debug;
+		};
+		D55CD5192F241D04006C6A47 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NUC37C5ZL9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.roomateapp.RoomateAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RoomateApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RoomateApp";
+			};
+			name = Release;
+		};
+		D55CD51B2F241D04006C6A47 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NUC37C5ZL9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.roomateapp.RoomateAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RoomateApp;
+			};
+			name = Debug;
+		};
+		D55CD51C2F241D04006C6A47 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NUC37C5ZL9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.roomateapp.RoomateAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RoomateApp;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D55CD4EB2F241D02006C6A47 /* Build configuration list for PBXProject "RoomateApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D55CD5122F241D04006C6A47 /* Debug */,
+				D55CD5132F241D04006C6A47 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D55CD5142F241D04006C6A47 /* Build configuration list for PBXNativeTarget "RoomateApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D55CD5152F241D04006C6A47 /* Debug */,
+				D55CD5162F241D04006C6A47 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D55CD5172F241D04006C6A47 /* Build configuration list for PBXNativeTarget "RoomateAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D55CD5182F241D04006C6A47 /* Debug */,
+				D55CD5192F241D04006C6A47 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D55CD51A2F241D04006C6A47 /* Build configuration list for PBXNativeTarget "RoomateAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D55CD51B2F241D04006C6A47 /* Debug */,
+				D55CD51C2F241D04006C6A47 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D55CD4E82F241D02006C6A47 /* Project object */;
+}
