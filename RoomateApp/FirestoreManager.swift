@@ -16,7 +16,7 @@ class FirestoreManager: ObservableObject{
     //get items
     func getItems(){
         
-        db.collection("items").order(by: "state").addSnapshotListener { snapshot, error in
+        db.collection("items").order(by: "state", descending: true).addSnapshotListener { snapshot, error in
             if let error = error {
                 print("Error getting notes: \(error)")
                 return
