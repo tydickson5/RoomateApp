@@ -12,13 +12,15 @@ class FirestoreManager: ObservableObject{
     
     @Published var items = [Item]()
     
+    @Published var sort = true;
     
-    //get items
-    func getItems(){
+    
+    //get items live
+    func getItemsLive(){
         
-        db.collection("items").order(by: "state", descending: true).addSnapshotListener { snapshot, error in
+        db.collection("items").order(by: "state", descending: sort).addSnapshotListener { snapshot, error in
             if let error = error {
-                print("Error getting notes: \(error)")
+                print("Error getting items: \(error)")
                 return
             }
             
@@ -27,6 +29,41 @@ class FirestoreManager: ObservableObject{
             } ?? []
         }
         
+    }
+    
+    func getItems(){
+        db.collection("items").order(by: "state", descending: sort).getDocuments { snapshot, error in
+            // This code inside the brackets happens LATER (when the internet responds)
+            guard let documents = snapshot?.documents, error == nil else {
+                print("Error: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+
+            // Update the @Published variable on the main thread
+            DispatchQueue.main.async {
+                self.items = documents.compactMap { doc in
+                    try? doc.data(as: Item.self)
+                }
+            }
+        }
+        
+    }
+    
+    func getItem(id: String)async -> Item? {
+
+        let docRef = db.collection("items").document(id)
+        
+        do {
+            // Fetch the document once
+            let snapshot = try await docRef.getDocument()
+            
+            // Decode it into your Item struct
+            let item = try snapshot.data(as: Item.self)
+            return item
+        } catch {
+            print("Error fetching item: \(error)")
+            return nil
+        }
     }
     
     //add item
@@ -44,7 +81,7 @@ class FirestoreManager: ObservableObject{
     
     //update item
     func updateState(item: Item){
-        guard var itemId = item.id else {return};
+        guard let itemId = item.id else {return};
         
         var newState: String;
         
@@ -56,14 +93,21 @@ class FirestoreManager: ObservableObject{
             newState = "Have"
         }
         
-        var newItem = Item(id: itemId, name: item.name, state: newState);
+        let newItem = Item(id: itemId, name: item.name, state: newState);
         
         do {
             try db.collection("items").document(itemId).setData(from: newItem)
+            if let index = items.firstIndex(where: { $0.id == itemId }) {
+                items[index].state = newState
+            }
+
         } catch {
             print("Error updating note: \(error)")
+
         }
     }
+    
+    
     
     
     //delete item
