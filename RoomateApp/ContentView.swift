@@ -37,12 +37,17 @@ struct ContentView: View {
                         }
                     }
                 Spacer()
-                Image(systemName: "plus")
+                Image(systemName: isAddVisible ? "xmark": "plus")
                     .imageScale(.large)
                     .foregroundStyle(.tint)
                     .tint(Color.main)
                     .onTapGesture {
-                        isAddVisible = true
+                        if(isAddVisible){
+                            isAddVisible = false
+                        } else {
+                            isAddVisible = true
+                        }
+                        
                     }
 
                 
@@ -50,25 +55,35 @@ struct ContentView: View {
                 
                 
             }
-            HStack(){
-                TextField("Add Item", text:$itemName)
-                .onSubmit {
-                    print(itemName)
-                    firestoreManager.addItem(name: itemName, state: "Have")
-                    firestoreManager.getItems();
+            if(isAddVisible){
+                HStack(){
+                    TextField("Add Item", text:$itemName)
+                    .onSubmit {
+                        print(itemName)
+                        if(itemName == ""){return}
+                        firestoreManager.addItem(name: itemName, state: "Need")
+                        firestoreManager.getItems();
+                        itemName = ""
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.main.opacity(0.5), lineWidth: 2)
+                    )
+                    Button("Add"){
+                        //isAddVisible = false
+                        print(itemName)
+                        firestoreManager.addItem(name: itemName, state: "Need")
+                        firestoreManager.getItems();
+                        itemName = ""
+                    }
+                    .buttonStyle(.borderedProminent).tint(Color.main)
+                    
                 }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.main.opacity(0.5), lineWidth: 2)
-                )
-                Button("X"){
-                    isAddVisible = false
-                }
-                .buttonStyle(.borderedProminent).tint(Color.main)
                 
             }
-            .opacity(isAddVisible ? 1 : 0)
+            
+            
             List{
                 ForEach(firestoreManager.items){ item in
                     //Divider();

@@ -111,12 +111,14 @@ class FirestoreManager: ObservableObject{
     
     
     //delete item
-    func deleteItem(item: Item){
-        guard let itemId = item.id else { return }
-                
-        db.collection("items").document(itemId).delete { error in
-            if let error = error {
-                print("Error deleting note: \(error)")
+    func deleteItem(item: Item) {
+        let db = Firestore.firestore()
+        
+        db.collection("items").document(item.id).delete() { error in
+            if error == nil {
+                DispatchQueue.main.async {
+                    self.items.removeAll(where: { $0.id == item.id })
+                }
             }
         }
     }
