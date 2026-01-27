@@ -10,11 +10,9 @@ import FirebaseFirestore
 
 struct ContentView: View {
     
-    @State private var count = 0;
-    let haveItems:  [String] = ["milk", "Eggs", "Bacon"]
-    let needItems: [String] = ["paper towel"]
     
     @State private var itemName: String = ""
+    @State private var isAddVisible: Bool = false;
     
     
     @StateObject private var firestoreManager = FirestoreManager();
@@ -25,10 +23,29 @@ struct ContentView: View {
             HStack(){
                 Text("Princess Suki's Palace").font(.title).tint(Color.main)
                 Spacer();
+                Image(systemName: "line.3.horizontal.decrease")
+                    .imageScale(.large)
+                    .foregroundStyle(.tint)
+                    .tint(Color.main)
+                    .onTapGesture {
+                        if(firestoreManager.sort){
+                            firestoreManager.sort = false
+                            firestoreManager.getItems()
+                        } else {
+                            firestoreManager.sort = true
+                            firestoreManager.getItems()
+                        }
+                    }
+                Spacer()
                 Image(systemName: "plus")
                     .imageScale(.large)
                     .foregroundStyle(.tint)
                     .tint(Color.main)
+                    .onTapGesture {
+                        isAddVisible = true
+                    }
+
+                
                     
                 
                 
@@ -38,6 +55,7 @@ struct ContentView: View {
                 .onSubmit {
                     print(itemName)
                     firestoreManager.addItem(name: itemName, state: "Have")
+                    firestoreManager.getItems();
                 }
                 .padding()
                 .background(
@@ -45,11 +63,12 @@ struct ContentView: View {
                         .stroke(Color.main.opacity(0.5), lineWidth: 2)
                 )
                 Button("X"){
-                    
+                    isAddVisible = false
                 }
                 .buttonStyle(.borderedProminent).tint(Color.main)
                 
             }
+            .opacity(isAddVisible ? 1 : 0)
             List{
                 ForEach(firestoreManager.items){ item in
                     //Divider();
@@ -58,6 +77,9 @@ struct ContentView: View {
                         Spacer()
                         Button(item.state){
                             firestoreManager.updateState(item: item)
+                            
+                            
+                            
                         }
                         .tint(
                             item.state == "Have" ? Color.mainTertiary :
@@ -82,9 +104,11 @@ struct ContentView: View {
                 
             }
             .listStyle(.plain)
-            // 4. Hide the overall list background so your ZStack color shows through
             .scrollContentBackground(.hidden)
             .onAppear {
+                firestoreManager.getItems();
+            }
+            .refreshable {
                 firestoreManager.getItems();
             }
             Spacer()
