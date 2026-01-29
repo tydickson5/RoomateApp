@@ -7,7 +7,30 @@
 		<key>RoomateApp.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>RoomateAppDev.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>D55CD4EF2F241D02006C6A47</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D55CD4FF2F241D04006C6A47</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D55CD5092F241D04006C6A47</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
