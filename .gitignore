@@ -1,3 +1,6 @@
-# Local Secrets
-**/GoogleService-Info.plist
-**/GoogleService-Info-Dev.plist
+# Firebase Plists
+GoogleService-Info.plist
+GoogleService-Info-Dev.plist
+
+# If they are in a subfolder, you can also use:
+**/GoogleService-Info*.plist
