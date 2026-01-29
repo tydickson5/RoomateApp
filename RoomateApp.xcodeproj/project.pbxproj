@@ -37,7 +37,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D55CD5562F2B0F70006C6A47 /* Exceptions for "RoomateApp" folder in "RoomateApp" target */ = {
+		D55CD5742F2B1640006C6A47 /* Exceptions for "RoomateApp" folder in "RoomateApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"GoogleService-Info-Dev.plist",
@@ -51,7 +51,7 @@
 		D55CD4F22F241D02006C6A47 /* RoomateApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D55CD5562F2B0F70006C6A47 /* Exceptions for "RoomateApp" folder in "RoomateApp" target */,
+				D55CD5742F2B1640006C6A47 /* Exceptions for "RoomateApp" folder in "RoomateApp" target */,
 			);
 			path = RoomateApp;
 			sourceTree = "<group>";
