@@ -11,6 +11,8 @@
 		D55CD5262F26C047006C6A47 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D55CD5252F26C047006C6A47 /* FirebaseFirestore */; };
 		D55CD5282F26C047006C6A47 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D55CD5272F26C047006C6A47 /* FirebaseStorage */; };
 		D55CD5312F26C9C6006C6A47 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = D55CD5302F26C9C6006C6A47 /* FirebaseCore */; };
+		D55CD5772F2B300E006C6A47 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D55CD5762F2B300E006C6A47 /* GoogleSignIn */; };
+		D55CD5792F2B300E006C6A47 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D55CD5782F2B300E006C6A47 /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,7 @@
 			membershipExceptions = (
 				"GoogleService-Info-Dev.plist",
 				"GoogleService-Info.plist",
+				Info.plist,
 			);
 			target = D55CD4EF2F241D02006C6A47 /* RoomateApp */;
 		};
@@ -73,8 +76,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D55CD5772F2B300E006C6A47 /* GoogleSignIn in Frameworks */,
 				D55CD5282F26C047006C6A47 /* FirebaseStorage in Frameworks */,
 				D55CD5222F26C047006C6A47 /* FirebaseAuth in Frameworks */,
+				D55CD5792F2B300E006C6A47 /* GoogleSignInSwift in Frameworks */,
 				D55CD5312F26C9C6006C6A47 /* FirebaseCore in Frameworks */,
 				D55CD5262F26C047006C6A47 /* FirebaseFirestore in Frameworks */,
 			);
@@ -150,6 +155,8 @@
 				D55CD5252F26C047006C6A47 /* FirebaseFirestore */,
 				D55CD5272F26C047006C6A47 /* FirebaseStorage */,
 				D55CD5302F26C9C6006C6A47 /* FirebaseCore */,
+				D55CD5762F2B300E006C6A47 /* GoogleSignIn */,
+				D55CD5782F2B300E006C6A47 /* GoogleSignInSwift */,
 			);
 			productName = RoomateApp;
 			productReference = D55CD4F02F241D02006C6A47 /* RoomateApp.app */;
@@ -276,6 +283,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		D55CD5532F2B05BE006C6A47 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -455,6 +463,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RoomateApp/RoomateApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RoomateApp/Preview Content\"";
@@ -462,6 +471,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RoomateApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -473,6 +483,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sukiroommateapp.RoommateApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -486,6 +497,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RoomateApp/RoomateApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"RoomateApp/Preview Content\"";
@@ -493,6 +505,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RoomateApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -504,6 +517,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sukiroommateapp.RoommateApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -664,6 +678,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D55CD51F2F26BBBB006C6A47 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCore;
+		};
+		D55CD5762F2B300E006C6A47 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D55CD5522F2A8A8E006C6A47 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		D55CD5782F2B300E006C6A47 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D55CD5522F2A8A8E006C6A47 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
