@@ -10,7 +10,7 @@ import AuthenticationServices
 
 struct LoginView: View {
     
-    @StateObject var authManager = AuthManager()
+    @EnvironmentObject var authManager: AuthManager;
     @State private var email = ""
     @State private var password = ""
     @State private var currentNonce: String?
@@ -69,13 +69,27 @@ struct LoginView: View {
                 request.nonce = authManager.sha256(nonce)
             } onCompletion: { result in
                 Task {
-                    if case .success(let authorization) = result,
-                        let nonce = currentNonce {
-                            try? await authManager.signInWithApple(
+                    switch result {
+                    case .success(let authorization):
+                        guard let nonce = currentNonce else {
+                            print("❌ Nonce is missing!")
+                            return
+                        }
+                        
+                        do {
+                            print("🍎 Calling signInWithApple...")
+                            try await authManager.signInWithApple(
                                 authorization: authorization,
                                 nonce: nonce
-                            
-                        )
+                            )
+                            print("✅ Apple Sign-In completed successfully!")
+                        } catch {
+                            print("❌ Error signing in with Apple: \(error)")
+                            print("❌ Error details: \(error.localizedDescription)")
+                        }
+                        
+                    case .failure(let error):
+                        print("❌ Apple authorization failed: \(error)")
                     }
                 }
             }

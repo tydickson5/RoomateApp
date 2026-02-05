@@ -4,3 +4,4 @@ GoogleService-Info-Dev.plist
 
 # If they are in a subfolder, you can also use:
 **/GoogleService-Info*.plist
+**/GoogleService-Info-Dev.plist
