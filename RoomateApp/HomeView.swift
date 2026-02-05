@@ -31,7 +31,9 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 20){
             HStack(){
                 Text("Princess Suki's Palace").font(.title).tint(Color.main)
+                Text("user")
                 Spacer();
+                
                 Image(systemName: "line.3.horizontal.decrease")
                     .imageScale(.large)
                     .foregroundStyle(.tint)
@@ -63,6 +65,11 @@ struct HomeView: View {
                     
                 
                 
+            }
+            Button("simple sign out"){
+                Task{
+                    try authManager.signOut();
+                }
             }
             if(isAddVisible){
                 HStack(){
