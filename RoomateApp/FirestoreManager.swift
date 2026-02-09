@@ -5,6 +5,8 @@
 //  Created by Ty Dickson on 1/25/26.
 //
 import FirebaseFirestore
+import AuthenticationServices
+import SwiftUI
 
 
 class FirestoreManager: ObservableObject{
@@ -14,25 +16,40 @@ class FirestoreManager: ObservableObject{
     
     @Published var sort = true;
     
+    @EnvironmentObject var authManager: AuthManager;
+    
     
     //get items live
-    func getItemsLive(){
-        
-        db.collection("items").order(by: "state", descending: sort).addSnapshotListener { snapshot, error in
+    private var listener: ListenerRegistration?
+
+    func getItemsLive() {
+        // Ensure only ONE listener exists
+        listener?.remove()
+
+        listener = db.collection("items")
+            .order(by: "state", descending: sort)            // primary sort      // secondary sort
+        .addSnapshotListener { snapshot, error in
             if let error = error {
                 print("Error getting items: \(error)")
                 return
             }
-            
-            self.items = snapshot?.documents.compactMap { document in
-                try? document.data(as: Item.self)
-            } ?? []
+
+            guard let documents = snapshot?.documents else { return }
+
+            let newItems = documents.compactMap {
+                try? $0.data(as: Item.self)
+            }
+
+            DispatchQueue.main.async {
+                withAnimation(.spring(response: 0.45, dampingFraction: 0.85)) {
+                    self.items = newItems
+                }
+            }
         }
-        
     }
     
     func getItems(){
-        db.collection("items").order(by: "state", descending: sort).getDocuments { snapshot, error in
+        db.collection("items").order(by: "createdAt", descending: sort).getDocuments { snapshot, error in
             // This code inside the brackets happens LATER (when the internet responds)
             guard let documents = snapshot?.documents, error == nil else {
                 print("Error: \(error?.localizedDescription ?? "Unknown error")")
@@ -67,8 +84,8 @@ class FirestoreManager: ObservableObject{
     }
     
     //add item
-    func addItem(name: String, state: String){
-        let newItem = Item(name: name, state: state);
+    func addItem(name: String, state: Int, userid: String){
+        let newItem = Item(name: name, state: state, user: userid, note: "", claimed: "none", createdAt: Date());
         
         do{
             let _ = try db.collection("items").addDocument(from: newItem);
@@ -81,30 +98,30 @@ class FirestoreManager: ObservableObject{
     
     //update item
     func updateState(item: Item){
-        guard let itemId = item.id else {return};
-        
-        var newState: String;
-        
-        if(item.state == "Have"){
-            newState = "Low"
-        } else if(item.state == "Low"){
-            newState = "Need"
-        } else {
-            newState = "Have"
-        }
-        
-        let newItem = Item(id: itemId, name: item.name, state: newState);
-        
-        do {
-            try db.collection("items").document(itemId).setData(from: newItem)
-            if let index = items.firstIndex(where: { $0.id == itemId }) {
-                items[index].state = newState
-            }
+        guard let itemId = item.id else { return }
 
-        } catch {
-            print("Error updating note: \(error)")
-
+        let newState: Int
+        switch item.state {
+        case 0: newState = 1
+        case 1: newState = 2
+        default: newState = 0
         }
+
+        db.collection("items")
+            .document(itemId)
+            .updateData([
+                "state": newState
+            ])
+    }
+    
+    func updateNote(item: Item, newNote: String){
+        guard let itemId = item.id else { return }
+
+        db.collection("items")
+            .document(itemId)
+            .updateData([
+                "note": newNote
+            ])
     }
     
     
