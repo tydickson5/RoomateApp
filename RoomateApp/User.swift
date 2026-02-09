@@ -11,5 +11,5 @@ struct User: Identifiable, Codable{
     @DocumentID var id: String?;
     var userID: String;
     var name: String;
-    var groups: [Group];
+    var groups: [GroupItem];
 }

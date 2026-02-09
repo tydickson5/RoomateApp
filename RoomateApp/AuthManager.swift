@@ -64,10 +64,9 @@ class AuthManager: ObservableObject{
             let snapshot = try await docRef.getDocument()
             
             if snapshot.exists {
-                // User document exists, load it
+                // Use getDocument(as:) instead of manual decoding
                 print("✅ Loading existing user: \(uid)")
-                let decoder = Firestore.Decoder()
-                self.user = try decoder.decode(User.self, from: snapshot.data() ?? [:])
+                self.user = try snapshot.data(as: User.self)
             } else {
                 // User document doesn't exist, create it
                 print("➕ Creating new user: \(uid)")
@@ -130,8 +129,8 @@ class AuthManager: ObservableObject{
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
         
-        guard let windowScene = await UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let rootViewController = await windowScene.windows.first?.rootViewController else {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let rootViewController = windowScene.windows.first?.rootViewController else {
             return
         }
         
@@ -141,7 +140,7 @@ class AuthManager: ObservableObject{
         let accessToken = result.user.accessToken.tokenString
         
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
-        let authResult  = try await Auth.auth().signIn(with: credential)
+        _  = try await Auth.auth().signIn(with: credential)
         //await userFunction(createUser: authResult.additionalUserInfo?.isNewUser ?? false)
     }
     
@@ -162,7 +161,7 @@ class AuthManager: ObservableObject{
             fullName: appleIDCredential.fullName
         )
 
-        let authResult = try await Auth.auth().signIn(with: credential)
+        _ = try await Auth.auth().signIn(with: credential)
         //await userFunction(createUser: authResult.additionalUserInfo?.isNewUser ?? false)
     }
 
@@ -208,14 +207,15 @@ class AuthManager: ObservableObject{
 extension AuthManager {
     static var preview: AuthManager {
         let manager = AuthManager()
-        manager.isAuthenticated = true
-        manager.isLoading = false
+        
         manager.user = User(
             id: "preview-123",
             userID: "preview-123",
             name: "Preview User",
             groups: []
         )
+        manager.isAuthenticated = true
+        manager.isLoading = false
         return manager
     }
 }

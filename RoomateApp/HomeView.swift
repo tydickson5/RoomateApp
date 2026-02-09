@@ -26,38 +26,43 @@ struct HomeView: View {
     
     @EnvironmentObject var authManager: AuthManager;
     
+    func addItem(){
+        print(self.itemName)
+        firestoreManager.addItem(name: self.itemName, state: 2, userid: authManager.user!.userID);
+        //firestoreManager.getItems();
+        self.itemName = ""
+    }
+
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 20){
             HStack(){
                 Text("Princess Suki's Palace").font(.title).tint(Color.main)
-                Text("user")
+                //Text(authManager.user?.name ?? "noneuser")
+                //Button("signout"){
+                //    Task{
+                //        try authManager.signOut()
+                //    }
+                    
+                //}
                 Spacer();
-                
+            
                 Image(systemName: "line.3.horizontal.decrease")
                     .imageScale(.large)
                     .foregroundStyle(.tint)
                     .tint(Color.main)
                     .onTapGesture {
-                        if(firestoreManager.sort){
-                            firestoreManager.sort = false
-                            firestoreManager.getItems()
-                        } else {
-                            firestoreManager.sort = true
-                            firestoreManager.getItems()
-                        }
+                        firestoreManager.sort = !firestoreManager.sort
+                        firestoreManager.getItemsLive()
                     }
-                Spacer()
+
                 Image(systemName: isAddVisible ? "xmark": "plus")
                     .imageScale(.large)
                     .foregroundStyle(.tint)
                     .tint(Color.main)
                     .onTapGesture {
-                        if(isAddVisible){
-                            isAddVisible = false
-                        } else {
-                            isAddVisible = true
-                        }
+                        isAddVisible = !isAddVisible
                         
                     }
 
@@ -66,20 +71,12 @@ struct HomeView: View {
                 
                 
             }
-            Button("simple sign out"){
-                Task{
-                    try authManager.signOut();
-                }
-            }
+            
             if(isAddVisible){
                 HStack(){
                     TextField("Add Item", text:$itemName)
                     .onSubmit {
-                        print(itemName)
-                        if(itemName == ""){return}
-                        firestoreManager.addItem(name: itemName, state: "Need")
-                        firestoreManager.getItems();
-                        itemName = ""
+                        addItem();
                     }
                     .padding()
                     .background(
@@ -88,10 +85,8 @@ struct HomeView: View {
                     )
                     Button("Add"){
                         //isAddVisible = false
-                        print(itemName)
-                        firestoreManager.addItem(name: itemName, state: "Need")
-                        firestoreManager.getItems();
-                        itemName = ""
+                        addItem();
+                        
                     }
                     .buttonStyle(.borderedProminent).tint(Color.main)
                     
@@ -102,24 +97,11 @@ struct HomeView: View {
             
             List{
                 ForEach(firestoreManager.items){ item in
-                    //Divider();
-                    HStack(){
-                        Text(item.name)
-                        Spacer()
-                        Button(item.state){
-                            firestoreManager.updateState(item: item)
-                            
-                            
-                            
-                        }
-                        .tint(
-                            item.state == "Have" ? Color.mainTertiary :
-                                item.state == "Low" ? Color.mainTint :
-                            Color.main
-                        )
-                        .buttonStyle(.borderedProminent)
-                        
-                    }
+                    
+                    ItemRow(item: item)
+                    
+                    
+                    
                 }
                 .onDelete { indexSet in
                     // Map the index to the actual item in your array
@@ -133,14 +115,14 @@ struct HomeView: View {
                 
                 
                 
+                
             }
+            .animation(.easeInOut, value: firestoreManager.items)
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
             .onAppear {
-                firestoreManager.getItems();
-            }
-            .refreshable {
-                firestoreManager.getItems();
+                firestoreManager.getItemsLive();
+                //print(authManager.user?.name ?? "none")
             }
             Spacer()
             
@@ -149,6 +131,9 @@ struct HomeView: View {
     }
 }
 
+
+
 #Preview {
     HomeView()
+        .environmentObject(AuthManager.preview)
 }
