@@ -14,6 +14,7 @@ struct ContentView: View {
     @EnvironmentObject var authManager: AuthManager
     
     
+    
     var body: some View {
         
         Group{
@@ -29,17 +30,9 @@ struct ContentView: View {
                 }
             } else if authManager.isAuthenticated, authManager.user != nil {
                 // User is authenticated AND user data is loaded
-                TabView{
-                    HomeView()
-                        .tabItem{
-                            Label("Home", systemImage: "house.fill")
-                        }
+                HomeView()
+                
 
-                    AccountView()
-                        .tabItem{
-                            Label("Profile", systemImage: "person.fill")
-                        }
-                }
             } else if authManager.isAuthenticated {
                 // Authenticated but user data not loaded yet
                 VStack {

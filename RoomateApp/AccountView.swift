@@ -1,5 +1,5 @@
 //
-//  Onboard.swift
+//  AccountView.swift
 //  RoomateApp
 //
 //  Created by Ty Dickson on 2/3/26.
@@ -35,6 +35,18 @@ struct AccountView: View {
                     .frame(height: 35)
             }
             .buttonStyle(.borderedProminent).tint(Color.main)
+            
+            Button(action:{
+                Task{
+                    try authManager.signOut()
+                }
+            }){
+                Text("Logout")
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 35)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.red)
         }
         .padding()
         
