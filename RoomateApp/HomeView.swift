@@ -47,6 +47,7 @@ struct HomeView: View {
                     
                 //}
                 Spacer();
+                
             
                 Image(systemName: "line.3.horizontal.decrease")
                     .imageScale(.large)

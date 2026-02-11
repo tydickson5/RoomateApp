@@ -33,11 +33,11 @@ struct ItemRow: View {
     
     func getItemStateTint(state: Int) -> Color{
         if(state == 2){
-            return Color.main
+            return Color.mainTertiary
         } else if(state == 1){
             return Color.mainTint
         }else{
-            return Color.mainTertiary
+            return Color.main
         }
     }
     
