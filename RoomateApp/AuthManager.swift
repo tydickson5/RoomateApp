@@ -22,6 +22,7 @@ class AuthManager: ObservableObject{
     @Published var firebaseUser: FirebaseAuth.User?
     private let db = Firestore.firestore()
     @Published var isLoading: Bool = false
+
     
     private var authStateListener: AuthStateDidChangeListenerHandle?
     
@@ -55,6 +56,13 @@ class AuthManager: ObservableObject{
                 self?.isLoading = false
             }
         }
+    }
+    
+    func changeName(newName: String){
+        if(newName == ""){ return };
+        db.collection("users").document(user!.userID).updateData(["name": newName])
+        user?.name = newName;
+        
     }
     
     private func loadOrCreateUser(uid: String) async {

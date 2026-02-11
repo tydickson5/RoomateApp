@@ -7,14 +7,42 @@
 
 import SwiftUI
 
-struct OnboardView: View {
+struct AccountView: View {
+    
+    @State private var name: String = "";
+    
+    @EnvironmentObject var authManager: AuthManager;
     
     var body: some View{
-        Text("test")
+        VStack(){
+            TextField("Name", text: $name)
+                .onSubmit {
+                    authManager.changeName(newName: name)
+                }
+                .onAppear(){
+                    name = authManager.user?.name ?? "error";
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.main.opacity(0.5), lineWidth: 2)
+                )
+            Button(action:{
+                authManager.changeName(newName: name)
+            }) {
+                Text("Change Name")
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 35)
+            }
+            .buttonStyle(.borderedProminent).tint(Color.main)
+        }
+        .padding()
+        
     }
+
 }
 
 
 #Preview {
-    OnboardView()
+    AccountView().environmentObject(AuthManager.preview)
 }

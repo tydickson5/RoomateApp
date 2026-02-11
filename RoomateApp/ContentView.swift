@@ -18,6 +18,8 @@ struct ContentView: View {
         
         Group{
             
+            
+            
             if authManager.isLoading {
                 // Show loading screen while checking auth state
                 VStack {
@@ -27,7 +29,17 @@ struct ContentView: View {
                 }
             } else if authManager.isAuthenticated, authManager.user != nil {
                 // User is authenticated AND user data is loaded
-                HomeView()
+                TabView{
+                    HomeView()
+                        .tabItem{
+                            Label("Home", systemImage: "house.fill")
+                        }
+
+                    AccountView()
+                        .tabItem{
+                            Label("Profile", systemImage: "person.fill")
+                        }
+                }
             } else if authManager.isAuthenticated {
                 // Authenticated but user data not loaded yet
                 VStack {
