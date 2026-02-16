@@ -26,6 +26,7 @@ struct HomeView: View {
     
     @EnvironmentObject var authManager: AuthManager;
     
+    
     func addItem(){
         print(self.itemName)
         firestoreManager.addItem(name: self.itemName, state: 2, userid: authManager.user!.userID);
@@ -45,6 +46,7 @@ struct HomeView: View {
                         Image(systemName: "person.fill")
                             .imageScale(.large)
                     }
+                    
                     
                 }
                 HStack(){
@@ -96,10 +98,10 @@ struct HomeView: View {
                 List{
                     ForEach(firestoreManager.items){ item in
                         
-                        ItemRow(item: item)
+                        ItemRow(item: item, user: authManager.user!)
                         
                         
-                        
+                    
                     }
                     .onDelete { indexSet in
                         // Map the index to the actual item in your array
@@ -127,8 +129,10 @@ struct HomeView: View {
             }
             .padding()
         }
+        .tint(Color.main)
         
     }
+        
 }
 
 

@@ -11,6 +11,9 @@ import FirebaseFirestore
 struct ItemRow: View {
     
     let item: Item
+    let user: User
+    
+    //@State private var notes: [Note] = [];
     
     @State private var itemName: String = ""
     @State private var showExtraOptions: Bool = false;
@@ -18,6 +21,13 @@ struct ItemRow: View {
     @State private var note: String = "";
     
     @StateObject private var firestoreManager = FirestoreManager();
+    
+    @StateObject private var noteManager = NoteManager();
+    
+    @EnvironmentObject var authManager: AuthManager;
+    //@StateObject var noteManager: NoteManager
+    
+    @State private var notesExist: Bool = false
     
     
     
@@ -42,8 +52,8 @@ struct ItemRow: View {
     }
     
     func updateItemNote(){
-        firestoreManager.updateNote(item: item, newNote: note);
-        showExtraOptions = !showExtraOptions
+        firestoreManager.updateNote(item: item, newNote: note, user: user);
+        //showExtraOptions = !showExtraOptions
     }
     
     var body: some View {
@@ -54,31 +64,31 @@ struct ItemRow: View {
                 Text(item.name)
                 
                 Spacer()
-                if(item.note != ""){
+                if(!noteManager.notes.isEmpty){
                     Image(systemName: "note.text")
+                        
                         .foregroundStyle(Color.gray)
                         .imageScale(.large)
                         .onTapGesture {
                             showExtraOptions = !showExtraOptions
                         }
                         .frame(width: 20)
+                        
                 }
+                   
 
-                if(showExtraOptions){
-                    Image(systemName: "chevron.up")
-                        .foregroundStyle(Color.gray)
-                        .imageScale(.large)
-                        .onTapGesture {
-                            showExtraOptions = !showExtraOptions
+                Image(systemName: showExtraOptions ? "chevron.up" : "chevron.down")
+                    .foregroundStyle(Color.gray)
+                    .imageScale(.large)
+                    .onTapGesture {
+                        showExtraOptions.toggle()
+                        
+                        if showExtraOptions {
+                            noteManager.getNotesLive(itemId: item.id!)
+                        } else {
+                            noteManager.stopListening()
                         }
-                } else{
-                    Image(systemName: "chevron.down")
-                        .foregroundStyle(Color.gray)
-                        .imageScale(.large)
-                        .onTapGesture {
-                            showExtraOptions = !showExtraOptions
-                        }
-                }
+                    }
                 
                 Button(action: {
                     firestoreManager.updateState(item: item)
@@ -92,6 +102,11 @@ struct ItemRow: View {
             }
             if(showExtraOptions){
                 VStack(){
+                    
+                    
+                    ForEach(noteManager.notes, id: \.id) { note in
+                        NoteRow(note: note, item: item, noteManager: noteManager)
+                    }
                     TextEditor(text: $note)
                         .onSubmit {
                             updateItemNote()
@@ -104,7 +119,7 @@ struct ItemRow: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.main.opacity(0.5), lineWidth: 2)
                         )
-                        .frame(height: 100)
+                        .frame(height: 50)
                     HStack(){
 
                         Spacer()
@@ -120,6 +135,11 @@ struct ItemRow: View {
             
         }
         .animation(.spring(), value: item.state)
+        .onAppear {
+            Task {
+                noteManager.checkNotesExist(itemId: item.id!)
+            }
+        }
         
     }
     
