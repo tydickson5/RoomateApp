@@ -58,6 +58,21 @@ class AuthManager: ObservableObject{
         }
     }
     
+    func getUser(userid: String)async -> User? {
+        let docRef = db.collection("users").document(userid)
+        
+        do{
+            let snapshot = try await docRef.getDocument()
+                
+            let user = try snapshot.data(as: User.self)
+            return user
+        } catch {
+            print("error getting user")
+            return nil
+        }
+        
+    }
+    
     func changeName(newName: String){
         if(newName == ""){ return };
         db.collection("users").document(user!.userID).updateData(["name": newName])

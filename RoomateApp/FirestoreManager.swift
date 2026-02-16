@@ -114,14 +114,14 @@ class FirestoreManager: ObservableObject{
             ])
     }
     
-    func updateNote(item: Item, newNote: String){
+    func updateNote(item: Item, newNote: String, user: User){
         guard let itemId = item.id else { return }
 
-        db.collection("items")
-            .document(itemId)
-            .updateData([
-                "note": newNote
-            ])
+        db.collection("items").document(itemId).collection("notes").addDocument(data: [
+            "note": newNote,
+            "createdAt": FieldValue.serverTimestamp(),
+            "user": user.userID
+        ])
     }
     
     
@@ -139,4 +139,7 @@ class FirestoreManager: ObservableObject{
             }
         }
     }
+    
+    
+    
 }
