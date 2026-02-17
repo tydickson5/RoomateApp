@@ -45,7 +45,7 @@ class NoteManager: ObservableObject{
         notesListener = db.collection("items")
             .document(itemId)
             .collection("notes")
-            .order(by: "createdAt", descending: true)
+            .order(by: "createdAt", descending: false)
             .addSnapshotListener { snapshot, error in
                 
                 if let error = error {
