@@ -35,7 +35,7 @@ struct AccountView: View {
                     .frame(height: 35)
             }
             .buttonStyle(.borderedProminent).tint(Color.main)
-            
+            .padding(.bottom, 50)
             Button(action:{
                 Task{
                     try authManager.signOut()
