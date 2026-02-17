@@ -53,6 +53,7 @@ struct ItemRow: View {
     
     func updateItemNote(){
         firestoreManager.updateNote(item: item, newNote: note, user: user);
+        note = ""
         //showExtraOptions = !showExtraOptions
     }
     
@@ -107,12 +108,10 @@ struct ItemRow: View {
                     ForEach(noteManager.notes, id: \.id) { note in
                         NoteRow(note: note, item: item, noteManager: noteManager)
                     }
+                    
                     TextEditor(text: $note)
                         .onSubmit {
                             updateItemNote()
-                        }
-                        .onAppear {
-                            note = item.note
                         }
                         .padding(3)
                         .background(
@@ -123,13 +122,17 @@ struct ItemRow: View {
                     HStack(){
 
                         Spacer()
-                        Button("Update"){
+                        Button("Add Note"){
                             updateItemNote()
                         }
                         .buttonStyle(.borderedProminent).tint(Color.main)
                     }
                     
                 }
+                .padding(.top, 5)
+                .padding()
+                .background(Color.mainTint.opacity(0.2))
+                .cornerRadius(8)
             }
             
             

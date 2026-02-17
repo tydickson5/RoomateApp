@@ -20,7 +20,7 @@ struct NoteRow: View{
     var body: some View{
         VStack(){
             HStack(){
-                Text(note.id!)
+                Text(note.note)
                 Spacer()
                 Image(systemName: "trash")
                     .foregroundColor(.red)
