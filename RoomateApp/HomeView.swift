@@ -25,11 +25,12 @@ struct HomeView: View {
     @StateObject private var firestoreManager = FirestoreManager();
     
     @EnvironmentObject var authManager: AuthManager;
+    @EnvironmentObject var groupManager: GroupManager
     
     
     func addItem(){
         print(self.itemName)
-        firestoreManager.addItem(name: self.itemName, state: 2, userid: authManager.user!.userID);
+        firestoreManager.addItem(name: self.itemName, state: 2, userid: authManager.user!.userID, group: groupManager.selectedGroup!);
         //firestoreManager.getItems();
         self.itemName = ""
     }
@@ -40,7 +41,7 @@ struct HomeView: View {
             VStack(alignment: .leading, spacing: 20){
                 HStack(){
                     
-                    Text("Princess Suki's Palace").font(.title).tint(Color.main)
+                    Text(groupManager.selectedGroup?.name ?? "Group Not Found").font(.title).tint(Color.main)
                     Spacer()
                     NavigationLink( destination: AccountView()){
                         Image(systemName: "person.fill")
@@ -59,7 +60,7 @@ struct HomeView: View {
                         .tint(Color.main)
                         .onTapGesture {
                             firestoreManager.sort = !firestoreManager.sort
-                            firestoreManager.getItemsLive()
+                            firestoreManager.getItemsLive(group: groupManager.selectedGroup!)
                         }
 
                     Image(systemName: isAddVisible ? "xmark": "plus")
@@ -121,7 +122,7 @@ struct HomeView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .onAppear {
-                    firestoreManager.getItemsLive();
+                    firestoreManager.getItemsLive(group: groupManager.selectedGroup!);
                     //print(authManager.user?.name ?? "none")
                 }
                 Spacer()

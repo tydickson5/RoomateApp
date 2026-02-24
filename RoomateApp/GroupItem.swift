@@ -10,6 +10,9 @@ import FirebaseFirestore
 struct GroupItem: Identifiable, Codable{
     @DocumentID var id: String?;
     var name: String;
-    var users: [User];
+    var users: [String];
+    var code: String;
+    var createdAt: Date;
+    var owner: String;
 }
 
