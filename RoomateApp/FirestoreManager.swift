@@ -18,16 +18,15 @@ class FirestoreManager: ObservableObject{
     
     @EnvironmentObject var authManager: AuthManager;
     
-    
     //get items live
     private var listener: ListenerRegistration?
 
-    func getItemsLive() {
+    func getItemsLive(group: GroupItem) {
         // Ensure only ONE listener exists
         listener?.remove()
 
-        listener = db.collection("items")
-            .order(by: "state", descending: sort)            // primary sort      // secondary sort
+        listener = db.collection("items").whereField("group", isEqualTo: group.id ?? "")
+            .order(by: "state", descending: sort)
         .addSnapshotListener { snapshot, error in
             if let error = error {
                 print("Error getting items: \(error)")
@@ -43,6 +42,7 @@ class FirestoreManager: ObservableObject{
             DispatchQueue.main.async {
                 withAnimation(.spring(response: 0.45, dampingFraction: 0.85)) {
                     self.items = newItems
+                    print(self.items)
                 }
             }
         }
@@ -84,8 +84,11 @@ class FirestoreManager: ObservableObject{
     }
     
     //add item
-    func addItem(name: String, state: Int, userid: String){
-        let newItem = Item(name: name, state: state, user: userid, note: "", claimed: "none", createdAt: Date());
+    func addItem(name: String, state: Int, userid: String, group: GroupItem){
+        
+
+
+        let newItem = Item(name: name, state: state, user: userid, note: "", claimed: "none", createdAt: Date(), group: group.id!);
         
         do{
             let _ = try db.collection("items").addDocument(from: newItem);

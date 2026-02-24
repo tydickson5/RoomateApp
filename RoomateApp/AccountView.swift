@@ -14,41 +14,53 @@ struct AccountView: View {
     @EnvironmentObject var authManager: AuthManager;
     
     var body: some View{
-        VStack(){
-            TextField("Name", text: $name)
-                .onSubmit {
+        NavigationStack{
+            VStack(){
+                NavigationLink(destination: AddGroupView()){
+                    HStack{
+                        Image(systemName: "person.2.fill")
+                            .imageScale(.large)
+                        Text("My Groups")
+                    }
+                    
+                }
+                .padding(.bottom, 30)
+                TextField("Name", text: $name)
+                    .onSubmit {
+                        authManager.changeName(newName: name)
+                    }
+                    .onAppear(){
+                        name = authManager.user?.name ?? "error";
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.main.opacity(0.5), lineWidth: 2)
+                    )
+                Button(action:{
                     authManager.changeName(newName: name)
+                }) {
+                    Text("Change Name")
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 35)
                 }
-                .onAppear(){
-                    name = authManager.user?.name ?? "error";
+                .buttonStyle(.borderedProminent).tint(Color.main)
+                .padding(.bottom, 50)
+                Button(action:{
+                    Task{
+                        try authManager.signOut()
+                    }
+                }){
+                    Text("Logout")
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 35)
                 }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.main.opacity(0.5), lineWidth: 2)
-                )
-            Button(action:{
-                authManager.changeName(newName: name)
-            }) {
-                Text("Change Name")
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 35)
+                .buttonStyle(.borderedProminent)
+                .tint(.red)
             }
-            .buttonStyle(.borderedProminent).tint(Color.main)
-            .padding(.bottom, 50)
-            Button(action:{
-                Task{
-                    try authManager.signOut()
-                }
-            }){
-                Text("Logout")
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 35)
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(.red)
+            .padding()
+            
         }
-        .padding()
         
     }
 

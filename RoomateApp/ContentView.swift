@@ -12,7 +12,7 @@ struct ContentView: View {
     
     
     @EnvironmentObject var authManager: AuthManager
-    
+    @EnvironmentObject var groupManager: GroupManager
     
     
     var body: some View {
@@ -30,7 +30,17 @@ struct ContentView: View {
                 }
             } else if authManager.isAuthenticated, authManager.user != nil {
                 // User is authenticated AND user data is loaded
-                HomeView()
+                
+                
+                
+                
+                //check for group
+                if(groupManager.groups.isEmpty){
+                    AddGroupView()
+                }else{
+                    HomeView()
+                }
+                
                 
 
             } else if authManager.isAuthenticated {
@@ -45,6 +55,12 @@ struct ContentView: View {
                 LoginView()
             }
         }
+        .task(id: authManager.user?.id) {
+                if let user = authManager.user {
+                    await groupManager.getUserGroups(user: user)
+                    print(groupManager.groups)
+                }
+            }
     }
 }
 
