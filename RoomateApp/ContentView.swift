@@ -13,6 +13,7 @@ struct ContentView: View {
     
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var groupManager: GroupManager
+    @EnvironmentObject var firestoreManager: FirestoreManager
     
     
     var body: some View {
@@ -38,7 +39,8 @@ struct ContentView: View {
                 if(groupManager.groups.isEmpty){
                     AddGroupView()
                 }else{
-                    HomeView()
+                    
+                    HomeView().id(authManager.user?.userID ?? "loggedOut")
                 }
                 
                 

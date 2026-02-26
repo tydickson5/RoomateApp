@@ -7,7 +7,7 @@
 
 import FirebaseFirestore
 
-struct User: Identifiable, Codable{
+struct User: Identifiable, Codable, Equatable{
     @DocumentID var id: String?;
     var userID: String;
     var name: String;

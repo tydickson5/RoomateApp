@@ -12,6 +12,9 @@ struct AccountView: View {
     @State private var name: String = "";
     
     @EnvironmentObject var authManager: AuthManager;
+    @EnvironmentObject var firestoreManager: FirestoreManager;
+    
+    @State private var suggestion: String = "";
     
     var body: some View{
         NavigationStack{
@@ -21,6 +24,7 @@ struct AccountView: View {
                         Image(systemName: "person.2.fill")
                             .imageScale(.large)
                         Text("My Groups")
+                        Image(systemName: "arrow.right").imageScale(.large)
                     }
                     
                 }
@@ -46,9 +50,40 @@ struct AccountView: View {
                 }
                 .buttonStyle(.borderedProminent).tint(Color.main)
                 .padding(.bottom, 50)
+                
+                
+                //suggestion form
+                HStack{
+                    Text("Suggestions here or text Eva").font(.caption).tint(Color.main)
+                    Spacer()
+                }
+                TextEditor(text: $suggestion)
+
+                    .padding(3)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.main.opacity(0.5), lineWidth: 2)
+                    )
+                    .frame(height: 150)
                 Button(action:{
+                    authManager.makeSuggestion(suggestion: suggestion)
+                    suggestion = ""
+                }) {
+                    Text("Make Suggestion")
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 35)
+                }
+                .buttonStyle(.borderedProminent).tint(Color.mainTint)
+                .padding(.bottom, 50)
+                
+                
+                //logout
+                Button(action:{
+                    
                     Task{
+                        
                         try authManager.signOut()
+                        firestoreManager.stopListener()
                     }
                 }){
                     Text("Logout")
@@ -57,10 +92,12 @@ struct AccountView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.red)
+                
             }
             .padding()
             
         }
+        .tint(Color.main)
         
     }
 

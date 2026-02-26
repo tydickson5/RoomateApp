@@ -39,20 +39,18 @@ class AuthManager: ObservableObject{
     }
     
     private func setupAuthListener() {
+        isLoading = true
+
         authStateListener = Auth.auth().addStateDidChangeListener { [weak self] _, firebaseUser in
             Task { @MainActor in
-                print("🔄 Auth state changed: \(firebaseUser?.uid ?? "nil")")
-                
                 if let firebaseUser = firebaseUser {
-                    // User is signed in
                     self?.isAuthenticated = true
                     await self?.loadOrCreateUser(uid: firebaseUser.uid)
                 } else {
-                    // User is signed out
                     self?.isAuthenticated = false
                     self?.user = nil
                 }
-                
+
                 self?.isLoading = false
             }
         }
@@ -120,6 +118,9 @@ class AuthManager: ObservableObject{
         }
     }
     
+    func makeSuggestion(suggestion: String){
+        let _ = db.collection("suggestions").addDocument(data: ["suggestion": suggestion, "user": user!.userID, "createdAt": Date()])
+    }
     
     
     func signUp(email: String, password: String) async throws {

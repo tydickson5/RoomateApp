@@ -15,14 +15,18 @@
 import SwiftUI
 import FirebaseFirestore
 
+
 struct HomeView: View {
+    
+    @State private var hideButtons = false
+
     
     
     @State private var itemName: String = ""
     @State private var isAddVisible: Bool = false;
     
     
-    @StateObject private var firestoreManager = FirestoreManager();
+    @EnvironmentObject var firestoreManager: FirestoreManager;
     
     @EnvironmentObject var authManager: AuthManager;
     @EnvironmentObject var groupManager: GroupManager
@@ -33,105 +37,113 @@ struct HomeView: View {
         firestoreManager.addItem(name: self.itemName, state: 2, userid: authManager.user!.userID, group: groupManager.selectedGroup!);
         //firestoreManager.getItems();
         self.itemName = ""
+        isAddVisible.toggle()
     }
 
     
     var body: some View {
         NavigationStack{
-            VStack(alignment: .leading, spacing: 20){
-                HStack(){
-                    
-                    Text(groupManager.selectedGroup?.name ?? "Group Not Found").font(.title).tint(Color.main)
-                    Spacer()
-                    NavigationLink( destination: AccountView()){
-                        Image(systemName: "person.fill")
-                            .imageScale(.large)
-                    }
-                    
-                    
-                }
-                HStack(){
-                    Spacer();
-                    
-                
-                    Image(systemName: "line.3.horizontal.decrease")
-                        .imageScale(.large)
-                        .foregroundStyle(.tint)
-                        .tint(Color.main)
-                        .onTapGesture {
-                            firestoreManager.sort = !firestoreManager.sort
-                            firestoreManager.getItemsLive(group: groupManager.selectedGroup!)
-                        }
-
-                    Image(systemName: isAddVisible ? "xmark": "plus")
-                        .imageScale(.large)
-                        .foregroundStyle(.tint)
-                        .tint(Color.main)
-                        .onTapGesture {
-                            isAddVisible = !isAddVisible
-                            
-                        }
-                }
-                
-                if(isAddVisible){
+            GeometryReader { geo in
+                VStack(alignment: .leading, spacing: 20){
                     HStack(){
-                        TextField("Add Item", text:$itemName)
-                        .onSubmit {
-                            addItem();
+                        
+                        Text(groupManager.selectedGroup?.name ?? "Group Not Found").font(.title).tint(Color.main)
+                        Spacer()
+                        NavigationLink( destination: AccountView()){
+                            Image(systemName: "person.fill")
+                                .imageScale(.large)
                         }
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.main.opacity(0.5), lineWidth: 2)
-                        )
-                        Button("Add"){
-                            //isAddVisible = false
-                            addItem();
+                        
+                        
+                    }
+                    HStack(){
+                        Spacer();
+                        
+                        
+                        Image(systemName: "line.3.horizontal.decrease")
+                            .imageScale(.large)
+                            .foregroundStyle(.tint)
+                            .tint(Color.main)
+                            .onTapGesture {
+                                firestoreManager.sort = !firestoreManager.sort
+                                firestoreManager.getItemsLive(group: groupManager.selectedGroup!)
+                            }
+                        
+                        Image(systemName: isAddVisible ? "xmark": "plus")
+                            .imageScale(.large)
+                            .foregroundStyle(.tint)
+                            .tint(Color.main)
+                            .onTapGesture {
+                                isAddVisible = !isAddVisible
+                                
+                            }
+                    }
+                    
+                    if(isAddVisible){
+                        HStack(){
+                            TextField("Add Item", text:$itemName)
+                                .onSubmit {
+                                    addItem();
+                                }
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.main.opacity(0.5), lineWidth: 2)
+                                )
+                            Button("Add"){
+                                //isAddVisible = false
+                                addItem();
+                                
+                            }
+                            .buttonStyle(.borderedProminent).tint(Color.main)
                             
                         }
-                        .buttonStyle(.borderedProminent).tint(Color.main)
                         
                     }
                     
-                }
-                
-                
-                List{
-                    ForEach(firestoreManager.items){ item in
-                        
-                        ItemRow(item: item, user: authManager.user!)
-                        
-                        
                     
+                    List{
+                        ForEach(firestoreManager.items){ item in
+                            
+                            ItemRow(item: item, user: authManager.user!)
+                            
+                            
+                            
+                        }
+                        .onDelete { indexSet in
+                            // Map the index to the actual item in your array
+                            indexSet.forEach { index in
+                                let item = firestoreManager.items[index]
+                                firestoreManager.deleteItem(item: item)
+                            }
+                        }
+                        
                     }
-                    .onDelete { indexSet in
-                        // Map the index to the actual item in your array
-                        indexSet.forEach { index in
-                            let item = firestoreManager.items[index]
-                            firestoreManager.deleteItem(item: item)
+                    .ignoresSafeArea(edges: .bottom)
+                    .animation(.easeInOut, value: firestoreManager.items)
+                    .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
+                    .onAppear {
+                        if let group = groupManager.selectedGroup {
+                                firestoreManager.getItemsLive(group: group)
+                            }
+                        //print(authManager.user?.name ?? "none")
+                    }
+                    .onChange(of: groupManager.selectedGroup?.id) { _, _ in
+                        if let group = groupManager.selectedGroup {
+                            firestoreManager.getItemsLive(group: group)
                         }
                     }
-                    
-                    
-                    
-                    
+                    Spacer()
                     
                     
                 }
-                .animation(.easeInOut, value: firestoreManager.items)
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
-                .onAppear {
-                    firestoreManager.getItemsLive(group: groupManager.selectedGroup!);
-                    //print(authManager.user?.name ?? "none")
-                }
-                Spacer()
-                
+                .padding()
+                .edgesIgnoringSafeArea(.bottom)
             }
-            .padding()
+            .tint(Color.main)
         }
         .tint(Color.main)
-        
     }
         
 }
