@@ -16,13 +16,15 @@ struct RoomateAppApp: App {
       @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
         
       @StateObject private var authManager = AuthManager()
-    @StateObject private var groupManager = GroupManager()
+     @StateObject private var groupManager = GroupManager()
+    @StateObject private var firestoreManager = FirestoreManager()
 
       var body: some Scene {
             WindowGroup {
                 ContentView()
                     .environmentObject(authManager)
                     .environmentObject(groupManager)
+                    .environmentObject(firestoreManager)
                     .onOpenURL { url in
                         GIDSignIn.sharedInstance.handle(url)
                     }

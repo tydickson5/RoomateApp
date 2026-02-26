@@ -16,17 +16,18 @@ class FirestoreManager: ObservableObject{
     
     @Published var sort = true;
     
-    @EnvironmentObject var authManager: AuthManager;
+    //@EnvironmentObject var authManager: AuthManager;
     
     //get items live
     private var listener: ListenerRegistration?
 
     func getItemsLive(group: GroupItem) {
         // Ensure only ONE listener exists
-        listener?.remove()
+        stopListener()
+        items.removeAll()
 
         listener = db.collection("items").whereField("group", isEqualTo: group.id ?? "")
-            .order(by: "state", descending: sort)
+            .order(by: "state", descending: sort).order(by: "createdAt", descending: true)
         .addSnapshotListener { snapshot, error in
             if let error = error {
                 print("Error getting items: \(error)")
@@ -46,6 +47,11 @@ class FirestoreManager: ObservableObject{
                 }
             }
         }
+    }
+    func stopListener() {
+        listener?.remove()
+        listener = nil
+        items.removeAll()
     }
     
     func getItems(){

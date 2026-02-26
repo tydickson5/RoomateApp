@@ -81,15 +81,7 @@ struct ItemRow: View {
                 Image(systemName: showExtraOptions ? "chevron.up" : "chevron.down")
                     .foregroundStyle(Color.gray)
                     .imageScale(.large)
-                    .onTapGesture {
-                        showExtraOptions.toggle()
-                        
-                        if showExtraOptions {
-                            noteManager.getNotesLive(itemId: item.id!)
-                        } else {
-                            noteManager.stopListening()
-                        }
-                    }
+                    
                 
                 Button(action: {
                     firestoreManager.updateState(item: item)
@@ -101,6 +93,7 @@ struct ItemRow: View {
                 .buttonStyle(.borderedProminent)
                 
             }
+            
             if(showExtraOptions){
                 VStack(){
                     
@@ -143,8 +136,19 @@ struct ItemRow: View {
                 noteManager.checkNotesExist(itemId: item.id!)
             }
         }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            showExtraOptions.toggle()
+            
+            if showExtraOptions {
+                noteManager.getNotesLive(itemId: item.id!)
+            } else {
+                noteManager.stopListening()
+            }
+        }
         
     }
+        
     
     
 }
