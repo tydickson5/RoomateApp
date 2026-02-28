@@ -20,10 +20,11 @@ struct HomeView: View {
     
     @State private var hideButtons = false
 
-    
+    @State private var searchBarText: String = "";
     
     @State private var itemName: String = ""
     @State private var isAddVisible: Bool = false;
+    @State private var isSearchVisible: Bool = false;
     
     
     @EnvironmentObject var firestoreManager: FirestoreManager;
@@ -31,6 +32,13 @@ struct HomeView: View {
     @EnvironmentObject var authManager: AuthManager;
     @EnvironmentObject var groupManager: GroupManager
     
+    var filteredItems: [Item] {
+        if searchBarText.isEmpty {
+            return firestoreManager.items
+        } else {
+            return firestoreManager.items.filter { $0.name.localizedCaseInsensitiveContains(searchBarText) }
+        }
+    }
     
     func addItem(){
         print(self.itemName)
@@ -57,13 +65,29 @@ struct HomeView: View {
                         
                     }
                     HStack(){
+                        HStack {
+                                Image(systemName: "magnifyingglass")
+                                    .foregroundColor(.gray)
+                                TextField("Search items", text: $searchBarText)
+                                    .textFieldStyle(.plain)
+                                
+                                if !searchBarText.isEmpty {
+                                    Button(action: { searchBarText = "" }) {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                            }
+                            .padding(8)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(10)
+                            .padding(.horizontal)
                         Spacer();
-                        
-                        
                         Image(systemName: "line.3.horizontal.decrease")
                             .imageScale(.large)
                             .foregroundStyle(.tint)
                             .tint(Color.main)
+                            .padding(.leading, 5)
                             .onTapGesture {
                                 firestoreManager.sort = !firestoreManager.sort
                                 firestoreManager.getItemsLive(group: groupManager.selectedGroup!)
@@ -76,8 +100,11 @@ struct HomeView: View {
                             .onTapGesture {
                                 isAddVisible = !isAddVisible
                                 
-                            }
+                            }.padding(3)
                     }
+
+                    
+                    
                     
                     if(isAddVisible){
                         HStack(){
@@ -100,10 +127,11 @@ struct HomeView: View {
                         }
                         
                     }
+
                     
                     
                     List{
-                        ForEach(firestoreManager.items){ item in
+                        ForEach(filteredItems){ item in
                             
                             ItemRow(item: item, user: authManager.user!)
                             
@@ -119,6 +147,7 @@ struct HomeView: View {
                         }
                         
                     }
+
                     .ignoresSafeArea(edges: .bottom)
                     .animation(.easeInOut, value: firestoreManager.items)
                     .listStyle(.plain)
