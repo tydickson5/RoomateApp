@@ -20,7 +20,7 @@ struct ItemRow: View {
     
     @State private var note: String = "";
     
-    @StateObject private var firestoreManager = FirestoreManager();
+    @StateObject private var itemManager = ItemManager();
     
     @StateObject private var noteManager = NoteManager();
     
@@ -52,7 +52,7 @@ struct ItemRow: View {
     }
     
     func updateItemNote(){
-        firestoreManager.updateNote(item: item, newNote: note, user: user);
+        itemManager.updateNote(item: item, newNote: note, user: user);
         note = ""
         //showExtraOptions = !showExtraOptions
     }
@@ -84,7 +84,7 @@ struct ItemRow: View {
                     
                 
                 Button(action: {
-                    firestoreManager.updateState(item: item)
+                    itemManager.updateState(item: item)
                 }) {
                     Text(getItemState(state: item.state))
                         .frame(width: 50)
@@ -113,7 +113,9 @@ struct ItemRow: View {
                         )
                         .frame(height: 50)
                     HStack(){
-
+                        Text(user.name)
+                        
+                        
                         Spacer()
                         Button("Add Note"){
                             updateItemNote()

@@ -12,5 +12,5 @@ struct User: Identifiable, Codable, Equatable{
     var userID: String;
     var name: String;
     var groups: [String];
-
+    var myGroup: String;
 }

@@ -12,11 +12,43 @@ import SwiftUI
 class GroupManager: ObservableObject{
     private var db = Firestore.firestore();
     
+    @Published var myGroup: GroupItem? = nil;
+    
     @Published var groups: [GroupItem] = [];
     @Published var selectedGroup: GroupItem? = nil;
     
     @EnvironmentObject var authManager: AuthManager
         
+    func loadOrCreateIndividualGroup(user: User) async{
+        
+        
+        let docRef = db.collection("users").document(user.id!)
+        
+        do{
+            let snapshot = try await docRef.getDocument()
+            
+            let user = try snapshot.data(as: User.self)
+            
+            
+            
+            
+            
+            if(user.myGroup != ""){
+                let docRefIndividualGroup = db.collection("groups").document(user.myGroup)
+                let snapshot = try await docRefIndividualGroup.getDocument()
+                self.myGroup = try snapshot.data(as: GroupItem.self)
+            }
+            else{
+                _ = await createIndividualGroup(user: user, code: "", name: user.name + "'s List")
+            }
+            
+      
+            
+        } catch {
+            print("error getting group")
+            
+        }
+    }
 
     func getGroup(groupid: String) async -> GroupItem? {
         let docRef = db.collection("groups").document(groupid)
@@ -202,7 +234,55 @@ class GroupManager: ObservableObject{
         
     }
     
+    func createIndividualGroup(user: User, code: String, name: String) async -> User{
+        
+        do{
+            let docRef = try await db.collection("groups").addDocument(data: [
+                    "name": name,
+                    "users": [user.id!],
+                    "code": code,
+                    "createdAt": Date(),
+                    "owner": user.id!
+                ])
+                        
+            try await db.collection("users").document(user.id!).updateData([
+                "myGroup": docRef.documentID,
+            ])
+            
+            print("User document updated with new group")
+            
+            do{
+            
+                let snapshot = try await db.collection("groups").document(docRef.documentID).getDocument()
+                
+                let data = try snapshot.data(as: GroupItem.self)
+                
+                self.myGroup = data
+                
+            } catch{
+                print("error")
+                
+                
+            }
+            
+            
+            
+            
+
+            
+            return user
+        } catch {
+            
+            print("hjdshfkjsd \(error)")
+            return user
+        }
+        
+        
+    }
+    
     func updateGroupName(newName: String){
         db.collection("groups").document(selectedGroup!.id!).updateData(["name": newName])
     }
+    
+    
 }
