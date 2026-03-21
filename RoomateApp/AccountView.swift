@@ -12,7 +12,7 @@ struct AccountView: View {
     @State private var name: String = "";
     
     @EnvironmentObject var authManager: AuthManager;
-    @EnvironmentObject var firestoreManager: FirestoreManager;
+    @EnvironmentObject var itemManager: ItemManager;
     
     @State private var suggestion: String = "";
     
@@ -83,7 +83,7 @@ struct AccountView: View {
                     Task{
                         
                         try authManager.signOut()
-                        firestoreManager.stopListener()
+                        itemManager.stopListener()
                     }
                 }){
                     Text("Logout")

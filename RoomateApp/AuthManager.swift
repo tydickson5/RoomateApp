@@ -22,6 +22,7 @@ class AuthManager: ObservableObject{
     @Published var firebaseUser: FirebaseAuth.User?
     private let db = Firestore.firestore()
     @Published var isLoading: Bool = false
+    
 
     
     private var authStateListener: AuthStateDidChangeListenerHandle?
@@ -30,6 +31,19 @@ class AuthManager: ObservableObject{
     init(){
         print("AuthManager Init")
         setupAuthListener()
+        //WHEN YOU NEED TO ADD SOMETHING TO AN ITEM
+        /*
+         db.collection("users").getDocuments { snapshot, error in
+            guard let docs = snapshot?.documents else { return }
+
+            for doc in docs {
+                doc.reference.updateData([
+                    "myGroup": ""
+                ])
+            }
+        }
+         
+        */
     }
     
     deinit{
@@ -105,7 +119,8 @@ class AuthManager: ObservableObject{
             id: uid,  // Use Firebase UID as document ID
             userID: uid,
             name: firebaseUser?.displayName ?? firebaseUser?.email ?? "User",
-            groups: []
+            groups: [],
+            myGroup: ""
         )
         
         do {
@@ -113,6 +128,8 @@ class AuthManager: ObservableObject{
             try db.collection("users").document(uid).setData(from: newUser)
             self.user = newUser
             print("✅ User created successfully")
+            
+            
         } catch {
             print("❌ Error creating user: \(error)")
         }
@@ -236,7 +253,8 @@ extension AuthManager {
             id: "preview-123",
             userID: "preview-123",
             name: "Preview User",
-            groups: []
+            groups: [],
+            myGroup: ""
         )
         manager.isAuthenticated = true
         manager.isLoading = false

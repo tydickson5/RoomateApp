@@ -15,5 +15,8 @@ struct Item: Identifiable, Codable, Equatable{
     var note: String;
     var claimed: String;
     var createdAt: Date;
-    var group: String
+    var group: String;
+    var use: Int; //share, ask, don't use
+    var categories: [String]
+    var order: Double
 }

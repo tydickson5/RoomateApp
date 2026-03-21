@@ -13,7 +13,7 @@ struct ContentView: View {
     
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var groupManager: GroupManager
-    @EnvironmentObject var firestoreManager: FirestoreManager
+    @EnvironmentObject var itemManager: ItemManager
     
     
     var body: some View {
@@ -35,17 +35,22 @@ struct ContentView: View {
                 
                 
                 
-                //check for group
-                if(groupManager.groups.isEmpty){
-                    AddGroupView()
-                }else{
-                    
-                    HomeView().id(authManager.user?.userID ?? "loggedOut")
+                
+                
+                TabView{
+                    IndividualListView().id(authManager.user?.userID ?? "loggedOut")
+                        .tabItem { Label("Your List", systemImage: "house.fill") }
+                    HomeView()
+                        .tabItem { Label("Groups",
+                            systemImage: "person.2.fill")}
+                    AccountView()
+                        .tabItem { Label("Profile", systemImage: "person.fill") }
                 }
+                .tint(Color.main)
                 
                 
 
-            } else if authManager.isAuthenticated {
+        } else if authManager.isAuthenticated {
                 // Authenticated but user data not loaded yet
                 VStack {
                     ProgressView()
@@ -61,6 +66,7 @@ struct ContentView: View {
                 if let user = authManager.user {
                     await groupManager.getUserGroups(user: user)
                     print(groupManager.groups)
+                    await groupManager.loadOrCreateIndividualGroup(user: user)
                 }
             }
     }
