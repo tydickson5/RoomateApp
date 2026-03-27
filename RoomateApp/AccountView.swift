@@ -16,6 +16,8 @@ struct AccountView: View {
     
     @State private var suggestion: String = "";
     
+    @FocusState private var isFocused: Bool
+    
     var body: some View{
         NavigationStack{
             VStack(){
@@ -65,6 +67,16 @@ struct AccountView: View {
                             .stroke(Color.main.opacity(0.5), lineWidth: 2)
                     )
                     .frame(height: 150)
+                    .focused($isFocused)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            Spacer()
+                            Button("Done") {
+                                isFocused = false
+                                // Optionally save the note here
+                            }
+                        }
+                    }
                 Button(action:{
                     authManager.makeSuggestion(suggestion: suggestion)
                     suggestion = ""
