@@ -44,12 +44,12 @@ class ItemManager: ObservableObject{
         if sort {
             query = db.collection("items")
                 .whereField("group", isEqualTo: group.id!)
-                .order(by: "state")
-                .order(by: "order")  // Secondary sort by lexicographic order
+                .order(by: "state", descending: true)
+                .order(by: "order", descending: true)  // Secondary sort by lexicographic order
         } else {
             query = db.collection("items")
                 .whereField("group", isEqualTo: group.id!)
-                .order(by: "order")  // Order by lexicographic order
+                .order(by: "order", descending: true)  // Order by lexicographic order
         }
         
         listener = query.addSnapshotListener { [weak self] snapshot, error in
@@ -123,50 +123,42 @@ class ItemManager: ObservableObject{
         guard let sourceIndex = source.first else { return }
         guard !sort else { return }
         
-        // Get the item ID before moving
         let movingItem = items[sourceIndex]
         guard let itemId = movingItem.id else { return }
-        
-        print("📍 Moving '\(movingItem.name)' from \(sourceIndex) to \(destination)")
         
         // Move in local array
         items.move(fromOffsets: source, toOffset: destination)
         
-        // Find where the item ended up after the move
-        guard let newIndex = items.firstIndex(where: { $0.id == itemId }) else {
-            print("❌ Couldn't find moved item")
-            return
-        }
+        guard let newIndex = items.firstIndex(where: { $0.id == itemId }) else { return }
         
-        print("📍 Item now at index \(newIndex)")
-        
-        // Calculate new order based on neighbors
         let newOrder: Double
         
         if items.count == 1 {
             newOrder = 1000.0
         } else if newIndex == 0 {
+            // Moving to top (which is actually highest order because of descending)
             let nextOrder = items[1].order
-            newOrder = nextOrder / 2.0
+            newOrder = nextOrder + 1000.0  // Changed from / 2.0
         } else if newIndex >= items.count - 1 {
+            // Moving to bottom (which is actually lowest order)
             let prevOrder = items[newIndex - 1].order
-            newOrder = prevOrder + 1000.0
+            newOrder = prevOrder / 2.0  // Changed from + 1000.0
         } else {
-            let prevOrder = items[newIndex - 1].order
-            let nextOrder = items[newIndex + 1].order
-            let gap = nextOrder - prevOrder
+            // Moving to middle
+            let prevOrder = items[newIndex - 1].order  // Higher value
+            let nextOrder = items[newIndex + 1].order  // Lower value
+            let gap = prevOrder - nextOrder  // Changed order
             
             if gap < 0.000001 {
                 rebalanceSection(around: newIndex)
                 return
             }
             
-            newOrder = prevOrder + (gap / 2.0)
+            newOrder = nextOrder + (gap / 2.0)  // Changed calculation
         }
         
         print("🔄 New order: \(newOrder)")
         
-        // Update in Firestore
         Task {
             try? await db.collection("items").document(itemId).updateData(["order": newOrder])
         }

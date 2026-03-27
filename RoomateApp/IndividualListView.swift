@@ -159,9 +159,9 @@ struct IndividualListView: View {
                         
                     }
                     .environment(\.editMode, searchBarText.isEmpty && itemManager.sort == false && editMode2 == true ? .constant(.active) : .constant(.inactive))
-                    .ignoresSafeArea(edges: .bottom)
                     .animation(.easeInOut, value: itemManager.items)
                     .listStyle(.plain)
+                    .contentMargins(.bottom, 45, for: .scrollContent) 
                     .scrollContentBackground(.hidden)
                     .onAppear {
                         if let group = groupManager.myGroup {
