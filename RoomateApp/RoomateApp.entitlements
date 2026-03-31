@@ -9,6 +9,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:www.chefnshare.com</string>
+		<string>applinks:chefnshare.com</string>
 	</array>
 </dict>
 </plist>

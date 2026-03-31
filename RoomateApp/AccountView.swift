@@ -13,6 +13,7 @@ struct AccountView: View {
     
     @EnvironmentObject var authManager: AuthManager;
     @EnvironmentObject var itemManager: ItemManager;
+    @EnvironmentObject var groupManager: GroupManager;
     
     @State private var suggestion: String = "";
     
@@ -45,6 +46,8 @@ struct AccountView: View {
                     )
                 Button(action:{
                     authManager.changeName(newName: name)
+                    var groupNewName: String = name + "'s List"
+                    groupManager.updateIndividualGroupName(newName: groupNewName)
                 }) {
                     Text("Change Name")
                         .frame(maxWidth: .infinity)

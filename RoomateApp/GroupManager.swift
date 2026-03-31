@@ -323,11 +323,6 @@ class GroupManager: ObservableObject{
                 
             }
             
-            
-            
-            
-
-            
             return user
         } catch {
             
@@ -340,6 +335,11 @@ class GroupManager: ObservableObject{
     
     func updateGroupName(newName: String){
         db.collection("groups").document(selectedGroup!.id!).updateData(["name": newName])
+    }
+    
+    func updateIndividualGroupName(newName: String){
+        db.collection("groups").document(myGroup!.id!).updateData(["name": newName])
+        myGroup!.name = newName
     }
     
     
