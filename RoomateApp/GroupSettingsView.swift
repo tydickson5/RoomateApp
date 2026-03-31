@@ -14,7 +14,32 @@ struct GroupSettingsView: View{
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View{
-        Text("Settings")
+        
+        VStack(alignment: .leading, spacing: 20){
+            
+            ShareLink(
+                item: URL(string: "https://www.chefnshare.com/join?groupId=\(groupManager.selectedGroup?.id ?? "notfound")")!,
+                message: Text("Join my group on Chef n Share!")
+            ) {
+                HStack {
+                    Text("Add member")
+                        .bold()
+                    Spacer()
+                    Image(systemName: "square.and.arrow.up")
+                        .imageScale(.large)
+                }
+                .padding()
+                .frame(height: 45)
+                .background(Color.mainTint)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+            }
+            
+            Text("More settings coming soon")
+            
+        }
+        .padding()
+        
     }
     
     

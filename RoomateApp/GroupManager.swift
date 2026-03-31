@@ -46,6 +46,7 @@ class GroupManager: ObservableObject{
             
         } catch {
             print("error getting group")
+            ToastManager.shared.error("Error creating your group")
             
         }
     }
@@ -60,6 +61,7 @@ class GroupManager: ObservableObject{
             return group
         } catch {
             print("error getting group")
+            ToastManager.shared.error("Error getting group")
             return nil;
         }
     }
@@ -89,14 +91,15 @@ class GroupManager: ObservableObject{
 
         } catch {
             print("Error fetching groups:", error)
+            ToastManager.shared.error("\(error.localizedDescription)")
         }
         
     }
     
     func setGroup(group: GroupItem, user: User) async -> User?{
         
-        guard var groupId = group.id,
-              var userId = user.id else { return user }
+        guard let groupId = group.id,
+              let userId = user.id else { return user }
 
         selectedGroup = group
 
@@ -122,38 +125,33 @@ class GroupManager: ObservableObject{
             return updatedUser
         } catch {
             print(error)
+            ToastManager.shared.error("\(error.localizedDescription)")
             return user
         }
     
 
     }
     
-    func addMemeber(code: String, user: User, name: String) async -> User{
+    
+    
+    func addMemberThroughLink(groupId: String, user: User) async -> User{
         
         do{
             
             //check user is not already in it
         
-            let snapshot = try await db.collection("groups")
-                    .whereField("name", isEqualTo: name)
-                    .getDocuments()
+            let docSnapshot = try await db.collection("groups").document(groupId).getDocument()
+                    guard let document = docSnapshot.data() else {
+                        print("Group not found")
+                        ToastManager.shared.error("Group not found")
+                        return user
+                    }
 
-            guard let document = snapshot.documents.first else {
-                print("Group not found")
-                return user
-            }
-
-            let groupId = document.documentID
-            let group = try document.data(as: GroupItem.self)
-
-            // 2️⃣ Check code
-            guard group.code == code else {
-                print("Invalid code")
-                return user
-            }
+            let group = try docSnapshot.data(as: GroupItem.self)
             
             if group.users.contains(user.id!) {
                 print("User already in group")
+                ToastManager.shared.error("User already in group")
                 return user
             }
 
@@ -171,12 +169,70 @@ class GroupManager: ObservableObject{
                     "users": FieldValue.arrayUnion([user.id!])
                 ])
             
-            var newUser = await setGroup(group: group, user: user) ?? user
+            let newUser = await setGroup(group: group, user: user) ?? user
+            ToastManager.shared.success("Added to: \(group.name)")
+            return newUser
+
+        } catch {
+            print("Error joining group:", error)
+            ToastManager.shared.error("\(error.localizedDescription)")
+            return user
+        }
+    }
+    
+    func addMemeber(code: String, user: User, name: String) async -> User{
+        
+        do{
+            
+            //check user is not already in it
+        
+            let snapshot = try await db.collection("groups")
+                    .whereField("name", isEqualTo: name)
+                    .getDocuments()
+
+            guard let document = snapshot.documents.first else {
+                print("Group not found")
+                ToastManager.shared.error("Group not found")
+                return user
+            }
+
+            let groupId = document.documentID
+            let group = try document.data(as: GroupItem.self)
+
+            // 2️⃣ Check code
+            guard group.code == code else {
+                print("Invalid code")
+                ToastManager.shared.error("Invalid code")
+                return user
+            }
+            
+            if group.users.contains(user.id!) {
+                print("User already in group")
+                ToastManager.shared.error("User already in group")
+                return user
+            }
+
+            // 3️⃣ Add group to user
+            try await db.collection("users")
+                .document(user.id!)
+                .updateData([
+                    "groups": FieldValue.arrayUnion([groupId])
+                ])
+
+            // 4️⃣ Add user to group
+            try await db.collection("groups")
+                .document(groupId)
+                .updateData([
+                    "users": FieldValue.arrayUnion([user.id!])
+                ])
+            
+            let newUser = await setGroup(group: group, user: user) ?? user
 
             return newUser
 
         } catch {
             print("Error joining group:", error)
+            ToastManager.shared.error("\(error.localizedDescription)")
             return user
         }
 
@@ -210,6 +266,7 @@ class GroupManager: ObservableObject{
                 .getDocuments()
             guard let document = snapshot.documents.first else {
                 print("error")
+                ToastManager.shared.error("Error")
                 return user
             }
             let group = try document.data(as: GroupItem.self)
@@ -222,12 +279,13 @@ class GroupManager: ObservableObject{
             
             
             
-            var newUser = await setGroup(group: group, user: user) ?? user
+            let newUser = await setGroup(group: group, user: user) ?? user
             
             return newUser
         } catch {
             
             print(error)
+            ToastManager.shared.error("\(error.localizedDescription)")
             return user
         }
         
@@ -265,11 +323,6 @@ class GroupManager: ObservableObject{
                 
             }
             
-            
-            
-            
-
-            
             return user
         } catch {
             
@@ -282,6 +335,11 @@ class GroupManager: ObservableObject{
     
     func updateGroupName(newName: String){
         db.collection("groups").document(selectedGroup!.id!).updateData(["name": newName])
+    }
+    
+    func updateIndividualGroupName(newName: String){
+        db.collection("groups").document(myGroup!.id!).updateData(["name": newName])
+        myGroup!.name = newName
     }
     
     

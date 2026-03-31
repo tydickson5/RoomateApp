@@ -13,6 +13,7 @@ struct AccountView: View {
     
     @EnvironmentObject var authManager: AuthManager;
     @EnvironmentObject var itemManager: ItemManager;
+    @EnvironmentObject var groupManager: GroupManager;
     
     @State private var suggestion: String = "";
     
@@ -45,12 +46,18 @@ struct AccountView: View {
                     )
                 Button(action:{
                     authManager.changeName(newName: name)
+                    var groupNewName: String = name + "'s List"
+                    groupManager.updateIndividualGroupName(newName: groupNewName)
                 }) {
                     Text("Change Name")
                         .frame(maxWidth: .infinity)
                         .frame(height: 35)
                 }
                 .buttonStyle(.borderedProminent).tint(Color.main)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.main)
+                )
                 .padding(.bottom, 50)
                 
                 
@@ -86,8 +93,12 @@ struct AccountView: View {
                         .frame(height: 35)
                 }
                 .buttonStyle(.borderedProminent).tint(Color.mainTint)
-                .padding(.bottom, 50)
                 
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.mainTint)
+                )
+                .padding(.bottom, 50)
                 
                 //logout
                 Button(action:{
@@ -104,6 +115,10 @@ struct AccountView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.red)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.red)
+                )
                 
             }
             .padding()
