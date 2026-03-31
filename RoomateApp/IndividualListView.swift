@@ -56,10 +56,11 @@ struct IndividualListView: View {
                         Text(groupManager.myGroup?.name ?? "Group Not Found").font(.title).tint(Color.main)
                         
                         Spacer()
+                        /*
                         NavigationLink( destination: GroupSettingsView()){
                             Image(systemName: "gearshape.fill").imageScale(.large)
                         }
-                        
+                        */
                         
                     }
                     HStack(){
@@ -167,7 +168,6 @@ struct IndividualListView: View {
                         if let group = groupManager.myGroup {
                             itemManager.getItemsLive(group: group)
                             }
-                        
                         //print(authManager.user?.name ?? "none")
                     }
                     .onChange(of: groupManager.myGroup?.id) { _, _ in

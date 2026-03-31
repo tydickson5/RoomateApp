@@ -69,6 +69,29 @@ struct ContentView: View {
                     await groupManager.loadOrCreateIndividualGroup(user: user)
                 }
             }
+        .onOpenURL { url in
+            Task{
+                print("Url = \(url)")
+                
+                guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+                    return
+                }
+
+                // Check path
+                if components.path == "/join" {
+                    let groupId = components.queryItems?
+                        .first(where: { $0.name == "groupId" })?.value
+
+                    if let groupId = groupId {
+                        print("Group ID:", groupId)
+                        let user: User  = await groupManager.addMemberThroughLink(groupId: groupId, user: authManager.user!)
+                        authManager.user = user
+                    }
+                }
+            }
+            
+            
+        }
     }
 }
 

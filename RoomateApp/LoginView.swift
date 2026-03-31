@@ -42,7 +42,7 @@ struct LoginView: View {
 
                         }
                         catch{
-                            print(error)
+                            ToastManager.shared.error("\(error.localizedDescription)")
                         }
                     }
                 }
@@ -55,6 +55,10 @@ struct LoginView: View {
                     
             }
             .buttonStyle(.borderedProminent)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.main)
+            )
             .tint(Color.main)
             
             

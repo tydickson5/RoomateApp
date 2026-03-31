@@ -16,8 +16,8 @@ struct RoomateAppApp: App {
       @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
         
       @StateObject private var authManager = AuthManager()
-     @StateObject private var groupManager = GroupManager()
-    @StateObject private var itemManager = ItemManager()
+      @StateObject private var groupManager = GroupManager()
+      @StateObject private var itemManager = ItemManager()
 
       var body: some Scene {
             WindowGroup {
@@ -25,6 +25,7 @@ struct RoomateAppApp: App {
                     .environmentObject(authManager)
                     .environmentObject(groupManager)
                     .environmentObject(itemManager)
+                    .toast()
                     .onOpenURL { url in
                         GIDSignIn.sharedInstance.handle(url)
                     }
