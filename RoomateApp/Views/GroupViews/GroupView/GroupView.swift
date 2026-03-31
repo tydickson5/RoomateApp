@@ -16,7 +16,7 @@ import SwiftUI
 import FirebaseFirestore
 
 
-struct HomeView: View {
+struct GroupView: View {
     
     @State private var hideButtons = false
 
@@ -201,6 +201,6 @@ struct HomeView: View {
 
 
 #Preview {
-    HomeView()
+    GroupView()
         .environmentObject(AuthManager.preview)
 }

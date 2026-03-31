@@ -40,7 +40,7 @@ struct ContentView: View {
                 TabView{
                     IndividualListView().id(authManager.user?.userID ?? "loggedOut")
                         .tabItem { Label("Your List", systemImage: "house.fill") }
-                    HomeView()
+                    GroupView()
                         .tabItem { Label("Groups",
                             systemImage: "person.2.fill")}
                     AccountView()
@@ -89,8 +89,6 @@ struct ContentView: View {
                     }
                 }
             }
-            
-            
         }
     }
 }
