@@ -91,6 +91,11 @@ struct ItemRow: View {
                 }
                 .tint(getItemStateTint(state: item.state))
                 .buttonStyle(.borderedProminent)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(getItemStateTint(state: item.state))
+                )
+                
                 
             }
             
@@ -121,6 +126,10 @@ struct ItemRow: View {
                             updateItemNote()
                         }
                         .buttonStyle(.borderedProminent).tint(Color.main)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.main)
+                        )
                     }
                     
                 }
