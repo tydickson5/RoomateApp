@@ -118,7 +118,7 @@ struct ItemRow: View {
                         )
                         .frame(height: 50)
                     HStack(){
-                        Text(user.name)
+
                         
                         
                         Spacer()
