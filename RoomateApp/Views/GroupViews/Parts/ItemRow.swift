@@ -13,6 +13,8 @@ struct ItemRow: View {
     let item: Item
     let user: User
     
+    
+    
     //@State private var notes: [Note] = [];
     
     @State private var itemName: String = ""
