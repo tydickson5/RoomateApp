@@ -38,9 +38,11 @@ struct AddGroupView: View{
                     HStack{
                         Text(group.name)
                             .frame(height: 30)
+                            .padding(5)
                         Spacer()
                         if(group.id != groupManager.selectedGroup?.id){
                             Text("Select")
+                                .padding(5)
                         }
                         
                     }
@@ -48,8 +50,12 @@ struct AddGroupView: View{
                     
                     
                 }
-                .buttonStyle(.borderedProminent)    .tint(group.id == groupManager.selectedGroup?.id ? Color.mainTint : Color.secondary)
-                
+
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(group.id == groupManager.selectedGroup?.id ? Color.mainTint : Color.secondary)
+                    
+                )
                 
 
             }
@@ -81,6 +87,10 @@ struct AddGroupView: View{
                         .frame(height: 35)
                 }
                 .buttonStyle(.borderedProminent).tint(Color.main)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.main)
+                )
                 
             } else{
                 Button(action:{
@@ -100,9 +110,14 @@ struct AddGroupView: View{
                         .frame(height: 35)
                 }
                 .buttonStyle(.borderedProminent).tint(Color.main)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.main)
+                )
                 if(errorText){
                     Text("Error Joining Group")
                 }
+                
             }
             
             Button(action:{
@@ -115,6 +130,7 @@ struct AddGroupView: View{
                 }
             }
             .padding(.top, 20)
+            
             
         }
         .padding()
