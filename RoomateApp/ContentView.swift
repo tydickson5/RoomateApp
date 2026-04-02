@@ -77,16 +77,28 @@ struct ContentView: View {
                     return
                 }
 
-                // Check path
                 if components.path == "/join" {
                     let groupId = components.queryItems?
                         .first(where: { $0.name == "groupId" })?.value
 
                     if let groupId = groupId {
                         print("Group ID:", groupId)
-                        let user: User  = await groupManager.addMemberThroughLink(groupId: groupId, user: authManager.user!)
-                        authManager.user = user
+                        
+                        // Wait for auth + user data to be ready before proceeding
+                        var attempts = 0
+                        while authManager.isLoading || authManager.user == nil {
+                            guard attempts < 50 else { return } // timeout after ~2s
+                            try? await Task.sleep(nanoseconds: 100_000_000) // 0.1s
+                            attempts += 1
+                        }
+                        
+                        guard let user = authManager.user else { return }
+                        
+                        let updatedUser = await groupManager.addMemberThroughLink(groupId: groupId, user: user)
+                        authManager.user = updatedUser
                     }
+                
+                
                 }
             }
         }
