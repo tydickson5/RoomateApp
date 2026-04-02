@@ -164,6 +164,7 @@ struct IndividualListView: View {
                     .listStyle(.plain)
                     .contentMargins(.bottom, 45, for: .scrollContent) 
                     .scrollContentBackground(.hidden)
+                    .scrollDismissesKeyboard(.interactively)
                     .onAppear {
                         if let group = groupManager.myGroup {
                             itemManager.getItemsLive(group: group)
@@ -180,7 +181,6 @@ struct IndividualListView: View {
                     
                 }
                 .padding()
-                .edgesIgnoringSafeArea(.bottom)
             }
             .tint(Color.main)
         }

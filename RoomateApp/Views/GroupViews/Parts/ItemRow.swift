@@ -13,6 +13,8 @@ struct ItemRow: View {
     let item: Item
     let user: User
     
+    
+    
     //@State private var notes: [Note] = [];
     
     @State private var itemName: String = ""
@@ -91,6 +93,11 @@ struct ItemRow: View {
                 }
                 .tint(getItemStateTint(state: item.state))
                 .buttonStyle(.borderedProminent)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(getItemStateTint(state: item.state))
+                )
+                
                 
             }
             
@@ -113,7 +120,7 @@ struct ItemRow: View {
                         )
                         .frame(height: 50)
                     HStack(){
-                        Text(user.name)
+
                         
                         
                         Spacer()
@@ -121,6 +128,10 @@ struct ItemRow: View {
                             updateItemNote()
                         }
                         .buttonStyle(.borderedProminent).tint(Color.main)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.main)
+                        )
                     }
                     
                 }

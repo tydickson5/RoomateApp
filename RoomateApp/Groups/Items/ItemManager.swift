@@ -14,7 +14,7 @@ class ItemManager: ObservableObject{
     
     @Published var items = [Item]()
     
-    @Published var sort = false;
+    @Published var sort = true;
     
     //@EnvironmentObject var authManager: AuthManager;
     
