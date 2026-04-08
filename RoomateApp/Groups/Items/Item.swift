@@ -19,4 +19,5 @@ struct Item: Identifiable, Codable, Equatable{
     var use: Int; //share, ask, don't use
     var categories: [String]
     var order: Double
+    var header: Bool?
 }
