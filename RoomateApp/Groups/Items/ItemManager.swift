@@ -101,14 +101,14 @@ class ItemManager: ObservableObject{
     }
     
     //add item
-    func addItem(name: String, state: Int, userid: String, group: GroupItem){
+    func addItem(name: String, state: Int, userid: String, group: GroupItem, header: Bool){
         
         
         
         let maxOrder = items.map { $0.order }.max() ?? 0.0
         let nextOrder = maxOrder + 1000.0
 
-        let newItem = Item(name: name, state: state, user: userid, note: "", claimed: "none", createdAt: Date(), group: group.id!, use: 0, categories: [], order: nextOrder);
+        let newItem = Item(name: name, state: state, user: userid, note: "", claimed: "none", createdAt: Date(), group: group.id!, use: 0, categories: [], order: nextOrder, header: header);
         
         do{
             let _ = try db.collection("items").addDocument(from: newItem);

@@ -19,12 +19,14 @@ struct ItemList: View {
 
     @State private var searchBarText: String = "";
     
-    @State private var itemName: String = ""
+    
     @State private var isAddVisible: Bool = false;
     @State private var isSearchVisible: Bool = false;
     @State private var editMode2: Bool = false;
     
     @State private var editMode: EditMode = .inactive
+    
+    
     
     
     
@@ -36,13 +38,7 @@ struct ItemList: View {
         }
     }
     
-    func addItem(){
-        print(self.itemName)
-        itemManager.addItem(name: self.itemName, state: 2, userid: authManager.user!.userID, group: groupManager.selectedGroup!);
-        //firestoreManager.getItems();
-        self.itemName = ""
-        isAddVisible.toggle()
-    }
+    
     
     var body: some View {
         NavigationStack{
@@ -114,68 +110,15 @@ struct ItemList: View {
                     
                     
                     if(isAddVisible){
-                        HStack(){
-                            TextField("Add Item", text:$itemName)
-                                .onSubmit {
-                                    addItem();
-                                }
-                                .padding()
-                                .background(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(Color.main.opacity(0.5), lineWidth: 2)
-                                )
-                            Button("Add"){
-                                //isAddVisible = false
-                                addItem();
-                                
-                            }
-                            .buttonStyle(.borderedProminent).tint(Color.main)
-                            
-                        }
+                        
+                        
+                        AddItemElement(type: type)
                         
                     }
 
                     
                     
-                    List{
-                        ForEach(filteredItems){ item in
-                            
-                            ItemRow(item: item, user: authManager.user!)
-                            
-                            
-                            
-                        }
-                        .onMove { source, destination in
-                            itemManager.moveItem(from: source, to: destination)
-                        }
-                        .onDelete { indexSet in
-                            // Map the index to the actual item in your array
-                            indexSet.forEach { index in
-                                let item = filteredItems[index]
-                                itemManager.deleteItem(item: item)
-                            }
-                        }
-                        
-                    }
-                    .environment(\.editMode, searchBarText.isEmpty && itemManager.sort == false && editMode2 == true ? .constant(.active) : .constant(.inactive))
-                    .animation(.easeInOut, value: itemManager.items)
-                    .listStyle(.plain)
-                    .contentMargins(.bottom, 45, for: .scrollContent)
-                    .scrollContentBackground(.hidden)
-                    .scrollDismissesKeyboard(.interactively)
-                    .onAppear {
-                        if let group = (type == 0 ? groupManager.myGroup! : groupManager.selectedGroup) {
-                            itemManager.getItemsLive(group: group)
-                        }
-                        
-                    
-                        //print(authManager.user?.name ?? "none")
-                    }
-                    .onChange(of: type == 0 ? groupManager.myGroup?.id : groupManager.selectedGroup?.id) { _, _ in
-                        if let group = (type == 0 ? groupManager.myGroup! : groupManager.selectedGroup) {
-                            itemManager.getItemsLive(group: group)
-                        }
-                    }
+                    ListElement(type: type, filteredItems: filteredItems, searchBarText: searchBarText, editMode2: editMode2)
                     Spacer()
                     
                     

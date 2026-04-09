@@ -12,6 +12,7 @@ import FirebaseFirestore
 
 struct IndividualListView: View {
     
+    
 
     var body: some View {
         ItemList(type: 0)
