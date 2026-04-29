@@ -14,5 +14,7 @@ struct GroupItem: Identifiable, Codable{
     var code: String;
     var createdAt: Date;
     var owner: String;
+    var anonymousNotes: Bool?;
+    var itemColors: [String]?;
 }
 

@@ -197,10 +197,3 @@ struct GroupView: View {
     }
         
 }
-
-
-
-#Preview {
-    GroupView()
-        .environmentObject(AuthManager.preview)
-}

@@ -24,12 +24,14 @@ struct IndividualListView: View {
     @State private var isAddVisible: Bool = false;
     @State private var isSearchVisible: Bool = false;
     
+
     
     @EnvironmentObject var itemManager: ItemManager;
     
     @EnvironmentObject var authManager: AuthManager;
     @EnvironmentObject var groupManager: GroupManager
     
+
     var filteredItems: [Item] {
         if searchBarText.isEmpty {
             return itemManager.items
@@ -56,11 +58,12 @@ struct IndividualListView: View {
                         Text(groupManager.myGroup?.name ?? "Group Not Found").font(.title).tint(Color.main)
                         
                         Spacer()
-                        /*
-                        NavigationLink( destination: GroupSettingsView()){
+                        NavigationLink(destination: GroupSettingsView(type: 0, anonymousNotes: itemManager.sort)) {
+                            Image(systemName: "gearshape.fill")
+                        }
                             Image(systemName: "gearshape.fill").imageScale(.large)
                         }
-                        */
+                        
                         
                     }
                     HStack(){

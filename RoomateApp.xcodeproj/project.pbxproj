@@ -42,8 +42,6 @@
 		D55CD5742F2B1640006C6A47 /* Exceptions for "RoomateApp" folder in "RoomateApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"GoogleService-Info-Dev.plist",
-				"GoogleService-Info.plist",
 				Info.plist,
 			);
 			target = D55CD4EF2F241D02006C6A47 /* RoomateApp */;
