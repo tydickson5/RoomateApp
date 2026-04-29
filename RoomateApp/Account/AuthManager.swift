@@ -14,6 +14,7 @@ import AuthenticationServices
 import FirebaseCore
 
 
+
 @MainActor
 class AuthManager: ObservableObject{
     
@@ -80,16 +81,20 @@ class AuthManager: ObservableObject{
             return user
         } catch {
             print("error getting user")
+            ToastManager.shared.error("Error getting user")
             return nil
         }
         
     }
     
     func changeName(newName: String){
-        if(newName == ""){ return };
+        if(newName == ""){
+            ToastManager.shared.error("Name cannot be empty")
+            return
+        };
         db.collection("users").document(user!.userID).updateData(["name": newName])
         user?.name = newName;
-        
+        ToastManager.shared.success(newName + " set as your name")
     }
     
     private func loadOrCreateUser(uid: String) async {
@@ -109,6 +114,7 @@ class AuthManager: ObservableObject{
             }
         } catch {
             print("❌ Error loading user: \(error)")
+            ToastManager.shared.error("\(error.localizedDescription)");
         }
     }
     
@@ -132,11 +138,13 @@ class AuthManager: ObservableObject{
             
         } catch {
             print("❌ Error creating user: \(error)")
+            ToastManager.shared.error("\(error.localizedDescription)")
         }
     }
     
     func makeSuggestion(suggestion: String){
         let _ = db.collection("suggestions").addDocument(data: ["suggestion": suggestion, "user": user!.userID, "createdAt": Date()])
+        ToastManager.shared.success("Suggestion made")
     }
     
     

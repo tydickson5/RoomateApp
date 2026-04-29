@@ -1,34 +1,40 @@
 //
-//  IndividualListView.swift
+//  HomeView.swift
 //  RoomateApp
 //
-//  Created by Ty Dickson on 3/19/26.
+//  Created by Ty Dickson on 2/3/26.
 //
 
+//
+//  ContentView.swift
+//  RoomateApp
+//
+//  Created by Ty Dickson on 1/23/26.
+//
 
 import SwiftUI
 import FirebaseFirestore
 
 
-struct IndividualListView: View {
+struct GroupView: View {
     
     @State private var hideButtons = false
 
     @State private var searchBarText: String = "";
-    @State private var editMode2: Bool = false;
-    
-    @State private var editMode: EditMode = .inactive
-    
     
     @State private var itemName: String = ""
     @State private var isAddVisible: Bool = false;
     @State private var isSearchVisible: Bool = false;
+    @State private var editMode2: Bool = false;
     
+    @State private var editMode: EditMode = .inactive
     
     @EnvironmentObject var itemManager: ItemManager;
     
     @EnvironmentObject var authManager: AuthManager;
     @EnvironmentObject var groupManager: GroupManager
+    
+    
     
     var filteredItems: [Item] {
         if searchBarText.isEmpty {
@@ -40,7 +46,7 @@ struct IndividualListView: View {
     
     func addItem(){
         print(self.itemName)
-        itemManager.addItem(name: self.itemName, state: 2, userid: authManager.user!.userID, group: groupManager.myGroup!);
+        itemManager.addItem(name: self.itemName, state: 2, userid: authManager.user!.userID, group: groupManager.selectedGroup!);
         //firestoreManager.getItems();
         self.itemName = ""
         isAddVisible.toggle()
@@ -53,7 +59,7 @@ struct IndividualListView: View {
                 VStack(alignment: .leading, spacing: 20){
                     HStack(){
                         
-                        Text(groupManager.myGroup?.name ?? "Group Not Found").font(.title).tint(Color.main)
+                        Text(groupManager.selectedGroup?.name ?? "Group Not Found").font(.title).tint(Color.main)
                         
                         Spacer()
                         NavigationLink( destination: GroupSettingsView()){
@@ -91,6 +97,8 @@ struct IndividualListView: View {
                                     editMode2 = !editMode2
                                 }
                         }
+                        
+
                         Image(systemName: "line.3.horizontal.decrease")
                             .imageScale(.large)
                             .foregroundStyle(.tint)
@@ -98,7 +106,7 @@ struct IndividualListView: View {
                             .padding(.leading, 5)
                             .onTapGesture {
                                 itemManager.sort = !itemManager.sort
-                                itemManager.getItemsLive(group: groupManager.myGroup!)
+                                itemManager.getItemsLive(group: groupManager.selectedGroup!)
                             }
                         
                         Image(systemName: isAddVisible ? "xmark": "plus")
@@ -163,15 +171,17 @@ struct IndividualListView: View {
                     .listStyle(.plain)
                     .contentMargins(.bottom, 45, for: .scrollContent) 
                     .scrollContentBackground(.hidden)
+                    .scrollDismissesKeyboard(.interactively)
                     .onAppear {
-                        if let group = groupManager.myGroup {
+                        if let group = groupManager.selectedGroup {
                             itemManager.getItemsLive(group: group)
-                            }
+                        }
                         
+                    
                         //print(authManager.user?.name ?? "none")
                     }
-                    .onChange(of: groupManager.myGroup?.id) { _, _ in
-                        if let group = groupManager.myGroup {
+                    .onChange(of: groupManager.selectedGroup?.id) { _, _ in
+                        if let group = groupManager.selectedGroup {
                             itemManager.getItemsLive(group: group)
                         }
                     }
@@ -180,7 +190,6 @@ struct IndividualListView: View {
                     
                 }
                 .padding()
-                .edgesIgnoringSafeArea(.bottom)
             }
             .tint(Color.main)
         }
