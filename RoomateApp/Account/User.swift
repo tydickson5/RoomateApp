@@ -13,4 +13,5 @@ struct User: Identifiable, Codable, Equatable{
     var name: String;
     var groups: [String];
     var myGroup: String;
+    var sortType: Int?;
 }
